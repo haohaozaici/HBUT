@@ -29,10 +29,8 @@ public interface HbutApi {
 
     //http://run.hbut.edu.cn//StuGrade/IndexRecentSemesterForJson/?id=1110321229&Mobile=1
     @GET("?")
-    Observable<Grade> getRecent(@Query("id") String id,
+    Observable<ResponseBody> getRecent(@Query("id") String id,
                                 @Query("Mobile") String m);
 
-    @GET("?")
-    Call<ResponseBody> getRecent2(@Query("id") String id,
-                                  @Query("Mobile") String m);
+
 }
