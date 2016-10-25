@@ -7,27 +7,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.hao.hbut.MainActivity"
+    tools:context="com.example.hao.hbut.activity.MainActivity"
     android:orientation="vertical"
     >
-    <Button
-        android:id="@+id/logon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="log on"
-        />
-    <TextView
-        android:id="@+id/ioe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:paddingTop="10dp"/>
-
-    <ImageView
-        android:id="@+id/code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/ic_launcher"/>
+<Button
+    android:id="@+id/logon"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="log on"
+    />
 
 
 
