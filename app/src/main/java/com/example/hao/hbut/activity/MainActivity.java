@@ -1,15 +1,18 @@
 package com.example.hao.hbut.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.hao.hbut.R;
+import com.example.hao.hbut.adapter.MainAdapter;
+import com.example.hao.hbut.model.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;
 import com.example.hao.hbut.model.data.Grade;
-import com.example.hao.hbut.model.data.Student;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -21,23 +24,6 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
-    public static boolean isLogon = false;
-    Observer<Student> observer_log = new Observer<Student>() {
-        @Override
-        public void onCompleted() {
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onNext(Student student) {
-            Log.e("`````````````", student.toString());
-        }
-    };
     Observer<ResponseBody> observer_get = new Observer<ResponseBody>() {
 
         @Override
@@ -60,6 +46,7 @@ public class MainActivity extends BaseActivity {
 
                 Gson gson = new Gson();
                 Grade grade = gson.fromJson(s, Grade.class);
+                mMainAdapter.setItem(grade);
 
             } catch (IOException e) {
 //                Log.e("11111111", e.toString());
@@ -67,11 +54,11 @@ public class MainActivity extends BaseActivity {
 
         }
     };
-    private String userName = "1310200128";
-    private String password = "1310200128";
     private String role = "Student";
     private Network network = new Network();
     private Button logon;
+    private RecyclerView mRecyclerView;
+    private MainAdapter mMainAdapter = new MainAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,24 +73,26 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_main_list);
+        setupRecyclerView();
+
+    }
+
+
+    private void setupRecyclerView() {
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getApplication());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mMainAdapter);
+
     }
 
     private void loadData() {
         unsubscribe();
-        if (!isLogon) {
-            subscription = network.getHbutApi(HbutApi.Account_HOST).logOn(userName, password, role)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(observer_log);
-        } else {
-            subscription = network.getHbutApi(HbutApi.StuGrade_HOST).getRecent(userName, "1")
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(observer_get);
-
-        }
+        subscription = network.getHbutApi(HbutApi.StuGrade_HOST).getRecent(Setting.userName, "1")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer_get);
 
     }
-
 
 }
