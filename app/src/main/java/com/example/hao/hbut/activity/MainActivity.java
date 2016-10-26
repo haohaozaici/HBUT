@@ -1,5 +1,6 @@
 package com.example.hao.hbut.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity {
     private String role = "Student";
     private Network network = new Network();
     private Button logon;
+    private Button logonOut;
     private RecyclerView mRecyclerView;
     private MainAdapter mMainAdapter = new MainAdapter();
 
@@ -70,6 +72,20 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 loadData();
+            }
+        });
+        logonOut = (Button)findViewById(R.id.logon_out);
+        logonOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences setting = getSharedPreferences("setting",0);
+                SharedPreferences.Editor editor = setting.edit();
+                editor.putBoolean("isLogin", false);
+                editor.apply();
+                Intent intent = new Intent(MainActivity.this, EntryActivity.class);
+                startActivity(intent);
+                finish();
+
             }
         });
 

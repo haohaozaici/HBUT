@@ -11,13 +11,29 @@
               tools:context="com.example.hao.hbut.activity.MainActivity"
     >
 
-
-    <Button
-        android:id="@+id/logon"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="获取最近学期成绩"
-        />
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/logon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取最近学期成绩"
+            />
+
+        <Button
+            android:id="@+id/logon_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="退出登录"
+            />
+
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_main_list"
