@@ -1,7 +1,5 @@
 package com.example.hao.hbut.model.api;
 
-import android.util.Log;
-
 import com.example.hao.hbut.model.Setting;
 
 import java.io.IOException;
@@ -75,11 +73,12 @@ public class Network {
         public okhttp3.Response intercept(Chain chain) throws IOException {
             okhttp3.Response originalResponse = chain.proceed(chain.request());
 
+            cookies.clear();
             if (!originalResponse.headers("Set-Cookie").isEmpty()) {
                 for (String header : originalResponse.headers("Set-Cookie")) {
                     cookies.add(header);
                 }
-//                Log.e("eeeeeeeeeee", cookies.toString());
+
                 Setting.setIsLogin(true);
 
                 ArrayList<String> cookiesArray = new ArrayList<>();
@@ -95,6 +94,8 @@ public class Network {
                 }
 
                 Setting.setCookies(cookie2);
+
+//                Log.e("login name + cookies", Setting.getUserName() + cookie2);
             }
             return originalResponse;
         }
@@ -106,13 +107,9 @@ public class Network {
         public okhttp3.Response intercept(Chain chain) throws IOException {
             Request.Builder builder = chain.request().newBuilder();
 
-            if (!Setting.getCookies().isEmpty() && Setting.isLogin()) {
-                builder.addHeader("Cookie", Setting.getCookies());
-            } else {
-
-                builder.addHeader("Cookie", Setting.getCookies());
-                Log.e("OkHttp", "Adding Header: " + Setting.getCookies());
-            }
+//            Log.e("get information name", Setting.getUserName());
+            builder.addHeader("Cookie", Setting.getCookies());
+//            Log.e("OkHttp", "Adding Header: " + Setting.getCookies());
 
             // This is done so I know which headers are being added;
             // this interceptor is used after the normal logging of OkHttp

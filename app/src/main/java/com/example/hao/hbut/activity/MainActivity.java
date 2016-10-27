@@ -81,6 +81,7 @@ public class MainActivity extends BaseActivity {
                 SharedPreferences setting = getSharedPreferences("setting",0);
                 SharedPreferences.Editor editor = setting.edit();
                 editor.putBoolean("isLogin", false);
+                editor.putString("cookies", "");
                 editor.apply();
                 Intent intent = new Intent(MainActivity.this, EntryActivity.class);
                 startActivity(intent);
