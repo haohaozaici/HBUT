@@ -20,30 +20,23 @@ public class EntryActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_layout);
 
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        SharedPreferences settings = getSharedPreferences("setting", 0);
+        Setting.setIsLogin(settings.getBoolean("isLogin", false));
+        Setting.setUserName(settings.getString("userName", ""));
+        Setting.setCookies(settings.getString("cookies", ""));
 
-                SharedPreferences settings = getSharedPreferences("setting", 0);
-                Setting.setIsLogin(settings.getBoolean("isLogin", false));
-                Setting.setUserName(settings.getString("userName", ""));
-                Setting.setCookies(settings.getString("cookies", ""));
+        if (Setting.isLogin()) {
+            Intent intent = new Intent(EntryActivity.this, MainActivity.class);
+            startActivity(intent);
 
-                if (Setting.isLogin()) {
-                    Intent intent = new Intent(EntryActivity.this, MainActivity.class);
-                    startActivity(intent);
+        } else {
+            Intent intent = new Intent(EntryActivity.this, LoginActivity.class);
+            startActivity(intent);
 
-                } else {
-                    Intent intent = new Intent(EntryActivity.this, LoginActivity.class);
-                    startActivity(intent);
+        }
+        finish();
 
-                }
-                finish();
-            }
-        }, 1000);
 
     }
 
