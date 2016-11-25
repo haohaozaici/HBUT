@@ -7,7 +7,6 @@ package com.example.hao.hbut.model;
 public class Setting {
 
     public static boolean isLogin = false;
-    public static boolean hasDefault = false;
     public static String cookies = "";
     public static String userName = "";
     public static String password = "";
@@ -45,11 +44,4 @@ public class Setting {
         Setting.password = password;
     }
 
-    public static boolean isHasDefault() {
-        return hasDefault;
-    }
-
-    public static void setHasDefault(boolean hasDefault) {
-        Setting.hasDefault = hasDefault;
-    }
 }

@@ -195,14 +195,12 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void saveLoginStatus() {
-        Setting.setHasDefault(true);
         SharedPreferences setting = getSharedPreferences("setting", 0);
         SharedPreferences.Editor editor = setting.edit();
         editor.putBoolean("isLogin", Setting.isLogin());
         editor.putString("cookies", Setting.getCookies());
         editor.putString("userName", Setting.getUserName());
         editor.putString("password", Setting.getPassword());
-        editor.putBoolean("hasDefault", Setting.isHasDefault());
         editor.apply();
     }
 

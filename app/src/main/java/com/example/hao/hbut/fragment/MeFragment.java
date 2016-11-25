@@ -1,6 +1,5 @@
 package com.example.hao.hbut.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.hao.hbut.R;
 import com.example.hao.hbut.activity.EntryActivity;
-import com.example.hao.hbut.activity.MainActivity;
 import com.example.hao.hbut.model.Setting;
 
 /**
@@ -47,6 +45,8 @@ public class MeFragment extends BaseFragment {
         SharedPreferences.Editor editor = setting.edit();
         editor.putBoolean("isLogin", false);
         editor.putString("cookies", "");
+        editor.putString("grade", "");
+        editor.putString("Schedule", "");
         editor.apply();
         Intent intent = new Intent(getActivity(), EntryActivity.class);
         startActivity(intent);

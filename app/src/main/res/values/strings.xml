@@ -3,4 +3,6 @@
     <string name="tab1_title">分数</string>
     <string name="tab2_title">课表</string>
     <string name="tab3_title">me</string>
+
+    <string name="success">刷新成功</string>
 </resources>

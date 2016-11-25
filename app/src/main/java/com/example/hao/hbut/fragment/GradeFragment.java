@@ -2,6 +2,7 @@ package com.example.hao.hbut.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ import rx.schedulers.Schedulers;
 public class GradeFragment extends BaseFragment {
 
     private Grade grade;
+    private RecyclerView mRecyclerView;
+    private MainAdapter mMainAdapter = new MainAdapter();
     Observer<ResponseBody> observer_get = new Observer<ResponseBody>() {
 
         @Override
@@ -59,6 +62,7 @@ public class GradeFragment extends BaseFragment {
                 Gson gson = new Gson();
                 grade = gson.fromJson(s, Grade.class);
                 mMainAdapter.setItem(grade);
+                Snackbar.make(mRecyclerView, getString(R.string.success), Snackbar.LENGTH_SHORT).show();
 
             } catch (IOException e) {
 //                Log.e("11111111", e.toString());
@@ -66,18 +70,19 @@ public class GradeFragment extends BaseFragment {
 
         }
     };
-    private RecyclerView mRecyclerView;
-    private MainAdapter mMainAdapter = new MainAdapter();
     private Network network = new Network();
-
     private Button refresh;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loadDataDisk();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layout1, container, false);
 
-        loadDataDisk();
         refresh = (Button) view.findViewById(R.id.refresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,13 +116,12 @@ public class GradeFragment extends BaseFragment {
     private void loadDataDisk() {
         SharedPreferences setting = getActivity().getSharedPreferences("setting", 0);
         String stringGrade = setting.getString("grade", "");
-        if (!stringGrade.equals("")){
+        if (!stringGrade.equals("")) {
             Gson gson = new Gson();
             grade = gson.fromJson(stringGrade, Grade.class);
             mMainAdapter.setItem(grade);
         }
 
     }
-
 
 }

@@ -26,15 +26,24 @@ public interface HbutApi {
     //所有成绩
     //http://run.hbut.edu.cn/StuGrade/IndexAllSemesterForJson?Id=1310200128&Mobile=1
     String StuGrade_HOST = "http://run.hbut.edu.cn/StuGrade/IndexRecentSemesterForJson/";
+    String StuAllGrade_HOST = "http://run.hbut.edu.cn/StuGrade/IndexAllSemesterForJson/";
     @GET("?")
     Observable<ResponseBody> getRecent(@Query("id") String id,
                                        @Query("Mobile") String m);
+    @GET("?")
+    Observable<ResponseBody> getAllGrade(@Query("id") String id,
+                                         @Query("Mobile") String m);
 
     /*
     * 课表 带cookie
     * @Semester
      */
     //http://run.hbut.edu.cn/ArrangeTask/MyselfScheduleForJson?Semester=20151&Id=1310200128&Role=Student
+    String Schedule_Host = "http://run.hbut.edu.cn/ArrangeTask/MyselfScheduleForJson/";
+    @GET("?")
+    Observable<ResponseBody> getSchedule(@Query("Semester") String semester,
+                                         @Query("Id") String id,
+                                         @Query("Role") String role);
 
 
 }

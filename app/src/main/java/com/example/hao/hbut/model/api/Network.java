@@ -23,6 +23,7 @@ public class Network {
 
     private static HbutApi hbutApi_logon;
     private static HbutApi hbutApi_get;
+    private static HbutApi hbutApi_getSchedule;
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxjavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
 
@@ -61,10 +62,25 @@ public class Network {
             hbutApi_get = retrofit.create(HbutApi.class);
 
         }
-        if (instance.equals(HbutApi.Account_HOST)) {
-            return hbutApi_logon;
-        } else {
-            return hbutApi_get;
+
+        if (hbutApi_getSchedule == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient_add)
+                    .baseUrl(HbutApi.Schedule_Host)
+                    .addCallAdapterFactory(rxjavaCallAdapterFactory)
+                    .build();
+            hbutApi_getSchedule = retrofit.create(HbutApi.class);
+        }
+
+        switch (instance) {
+            case HbutApi.Account_HOST:
+                return hbutApi_logon;
+            case HbutApi.StuGrade_HOST:
+                return hbutApi_get;
+            case HbutApi.Schedule_Host:
+                return hbutApi_getSchedule;
+            default:
+                return null;
         }
     }
 
