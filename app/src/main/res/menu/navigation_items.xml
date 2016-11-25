@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/tab1"
+        android:checked="true"
+        android:title="@string/tab1_title"
+        android:icon="@drawable/grade1"/>
+    <item android:id="@+id/tab2"
+        android:title="@string/tab2_title"
+        android:icon="@drawable/sch1"/>
+    <item android:id="@+id/tab3"
+        android:title="@string/tab3_title"
+        android:icon="@drawable/me"/>
+</menu>

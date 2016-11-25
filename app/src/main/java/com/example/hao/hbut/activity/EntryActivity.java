@@ -1,5 +1,6 @@
 package com.example.hao.hbut.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -21,7 +22,7 @@ public class EntryActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences settings = getSharedPreferences("setting", 0);
+        SharedPreferences settings = getSharedPreferences("setting", Context.MODE_PRIVATE);
         Setting.setIsLogin(settings.getBoolean("isLogin", false));
         Setting.setUserName(settings.getString("userName", ""));
         Setting.setCookies(settings.getString("cookies", ""));

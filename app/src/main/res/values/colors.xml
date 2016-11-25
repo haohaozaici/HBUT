@@ -8,6 +8,8 @@
     <color name="colorPrimaryDark">#96445C</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="mainBackground">#e6e6e6</color>
+    <color name="navigation_bacground">#FDFDFE</color>
 
 
     <color name="splash_background">#DFDFDF</color>

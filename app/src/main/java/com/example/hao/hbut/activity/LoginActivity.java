@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity {
     private ImageView img2;
     private Button logon;
 
-    private static String user = "", pass = "";
+    private String user = "", pass = "";
 
     Observer<Student> observer_log = new Observer<Student>() {
         @Override

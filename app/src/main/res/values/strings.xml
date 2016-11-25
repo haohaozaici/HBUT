@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Hbut</string>
+    <string name="tab1_title">分数</string>
+    <string name="tab2_title">课表</string>
+    <string name="tab3_title">me</string>
 </resources>
