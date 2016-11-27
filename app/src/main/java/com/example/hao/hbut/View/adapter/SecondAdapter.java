@@ -1,4 +1,4 @@
-package com.example.hao.hbut.adapter;
+package com.example.hao.hbut.View.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.model.data.Grade;
 import com.example.hao.hbut.model.data.Schedule;
 
 import java.util.ArrayList;

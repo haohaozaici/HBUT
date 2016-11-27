@@ -1,4 +1,4 @@
-package com.example.hao.hbut.activity;
+package com.example.hao.hbut.View.activity;
 
 import android.content.Context;
 import android.content.Intent;

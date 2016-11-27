@@ -1,4 +1,4 @@
-package com.example.hao.hbut.adapter;
+package com.example.hao.hbut.View.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

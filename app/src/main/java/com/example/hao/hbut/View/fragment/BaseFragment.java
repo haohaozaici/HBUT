@@ -1,4 +1,4 @@
-package com.example.hao.hbut.fragment;
+package com.example.hao.hbut.View.fragment;
 
 import android.app.Fragment;
 

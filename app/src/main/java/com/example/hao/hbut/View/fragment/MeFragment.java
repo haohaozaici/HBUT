@@ -1,4 +1,4 @@
-package com.example.hao.hbut.fragment;
+package com.example.hao.hbut.View.fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.activity.EntryActivity;
+import com.example.hao.hbut.View.activity.EntryActivity;
 import com.example.hao.hbut.model.Setting;
 
 /**

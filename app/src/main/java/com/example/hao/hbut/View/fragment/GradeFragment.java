@@ -1,4 +1,4 @@
-package com.example.hao.hbut.fragment;
+package com.example.hao.hbut.View.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,9 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Switch;
 
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.adapter.MainAdapter;
+import com.example.hao.hbut.View.adapter.MainAdapter;
+import com.example.hao.hbut.View.widget.ENRefreshView;
 import com.example.hao.hbut.model.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;
@@ -71,7 +73,8 @@ public class GradeFragment extends BaseFragment {
         }
     };
     private Network network = new Network();
-    private Button refresh;
+    private ENRefreshView refreshAll;
+    private Switch status;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,11 +86,13 @@ public class GradeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layout1, container, false);
 
-        refresh = (Button) view.findViewById(R.id.refresh);
-        refresh.setOnClickListener(new View.OnClickListener() {
+        status = (Switch) view.findViewById(R.id.status);
+        refreshAll = (ENRefreshView) view.findViewById(R.id.refresh_all);
+        refreshAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadData();
+                refreshAll.startRefresh();
+                loadData(status.isChecked());
             }
         });
 
@@ -104,12 +109,20 @@ public class GradeFragment extends BaseFragment {
 
     }
 
-    private void loadData() {
+    private void loadData(boolean checked) {
         unsubscribe();
-        subscription = network.getHbutApi(HbutApi.StuGrade_HOST).getRecent(Setting.userName, "1")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer_get);
+        if (!checked) {
+            subscription = network.getHbutApi(HbutApi.StuGrade_HOST).getRecent(Setting.userName, "1")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer_get);
+        } else {
+            subscription = network.getHbutApi(HbutApi.StuAllGrade_HOST).getAllGrade(Setting.userName, "1")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer_get);
+        }
+
 
     }
 
@@ -123,5 +136,6 @@ public class GradeFragment extends BaseFragment {
         }
 
     }
+
 
 }

@@ -1,16 +1,11 @@
-package com.example.hao.hbut.activity;
+package com.example.hao.hbut.View.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.adapter.MainAdapter;
+import com.example.hao.hbut.View.adapter.MainAdapter;
 import com.example.hao.hbut.model.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;

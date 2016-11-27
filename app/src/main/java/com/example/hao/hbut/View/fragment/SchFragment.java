@@ -1,4 +1,4 @@
-package com.example.hao.hbut.fragment;
+package com.example.hao.hbut.View.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.adapter.SecondAdapter;
+import com.example.hao.hbut.View.adapter.SecondAdapter;
 import com.example.hao.hbut.model.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;

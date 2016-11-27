@@ -1,4 +1,4 @@
-package com.example.hao.hbut.activity;
+package com.example.hao.hbut.View.activity;
 
 import android.support.v7.app.AppCompatActivity;
 

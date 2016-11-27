@@ -1,15 +1,11 @@
-package com.example.hao.hbut.activity;
+package com.example.hao.hbut.View.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Fade;
 
-import com.example.hao.hbut.R;
 import com.example.hao.hbut.model.Setting;
 
 /**

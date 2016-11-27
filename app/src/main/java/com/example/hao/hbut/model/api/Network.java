@@ -22,7 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Network {
 
     private static HbutApi hbutApi_logon;
-    private static HbutApi hbutApi_get;
+    private static HbutApi hbutApi_getGrade;
+    private static HbutApi hbutApi_getAllGrade;
     private static HbutApi hbutApi_getSchedule;
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxjavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
@@ -52,14 +53,24 @@ public class Network {
             hbutApi_logon = retrofit.create(HbutApi.class);
         }
 
-        if (hbutApi_get == null) {
+        if (hbutApi_getGrade == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient_add)
                     .baseUrl(HbutApi.StuGrade_HOST)
 //                    .addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxjavaCallAdapterFactory)
                     .build();
-            hbutApi_get = retrofit.create(HbutApi.class);
+            hbutApi_getGrade = retrofit.create(HbutApi.class);
+
+        }
+
+        if (hbutApi_getAllGrade == null) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .client(okHttpClient_add)
+                    .baseUrl(HbutApi.StuAllGrade_HOST)
+                    .addCallAdapterFactory(rxjavaCallAdapterFactory)
+                    .build();
+            hbutApi_getAllGrade = retrofit.create(HbutApi.class);
 
         }
 
@@ -76,9 +87,11 @@ public class Network {
             case HbutApi.Account_HOST:
                 return hbutApi_logon;
             case HbutApi.StuGrade_HOST:
-                return hbutApi_get;
+                return hbutApi_getGrade;
             case HbutApi.Schedule_Host:
                 return hbutApi_getSchedule;
+            case HbutApi.StuAllGrade_HOST:
+                return hbutApi_getAllGrade;
             default:
                 return null;
         }

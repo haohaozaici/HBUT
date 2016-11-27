@@ -1,17 +1,15 @@
-package com.example.hao.hbut.activity;
+package com.example.hao.hbut.View.activity;
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.fragment.GradeFragment;
-import com.example.hao.hbut.fragment.MeFragment;
-import com.example.hao.hbut.fragment.SchFragment;
+import com.example.hao.hbut.View.fragment.GradeFragment;
+import com.example.hao.hbut.View.fragment.MeFragment;
+import com.example.hao.hbut.View.fragment.SchFragment;
 
 public class MainActivity extends BaseActivity {
 
