@@ -45,5 +45,9 @@ public interface HbutApi {
                                          @Query("Id") String id,
                                          @Query("Role") String role);
 
+    String Jsoup_Host = "http://run.hbut.edu.cn/StuGrade/Index/";
+    @GET("?")
+    Observable<ResponseBody> getHtml();
+
 
 }
