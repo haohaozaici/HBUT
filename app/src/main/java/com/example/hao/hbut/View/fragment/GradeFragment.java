@@ -13,6 +13,7 @@ import android.widget.Switch;
 import com.example.hao.hbut.R;
 import com.example.hao.hbut.View.adapter.MainAdapter;
 import com.example.hao.hbut.View.widget.ENRefreshView;
+import com.example.hao.hbut.model.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;
 import com.example.hao.hbut.model.data.Grade;
@@ -54,13 +55,13 @@ public class GradeFragment extends BaseFragment {
         @Override
         public void onNext(ResponseBody responseBody) {
             try {
-                String s2 = responseBody.string();
-
-                Document document = Jsoup.parse(s2);
-                Element content = document.getElementById("mainContent");
-                Elements elements = content.getElementsByClass("table-list");
-                String text = elements.text();
-                String text2 = elements.get(0).attr("th");
+//                String s2 = responseBody.string();
+//
+//                Document document = Jsoup.parse(s2);
+//                Element content = document.getElementById("mainContent");
+//                Elements elements = content.getElementsByClass("table-list");
+//                String text = elements.text();
+//                String text2 = elements.get(0).attr("th");
 
                 String s = responseBody.string();
                 s = s.replaceAll("\\\\", "");
@@ -122,23 +123,23 @@ public class GradeFragment extends BaseFragment {
 
     private void loadData(boolean checked) {
         unsubscribe();
-//        if (!checked) {
-//            subscription = network.getHbutApi(HbutApi.StuGrade_HOST).getRecent(Setting.userName, "1")
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(observer_get);
-//        } else {
-//            subscription = network.getHbutApi(HbutApi.StuAllGrade_HOST).getAllGrade(Setting.userName, "1")
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(observer_get);
-//        }
+        if (!checked) {
+            subscription = network.getHbutApi(HbutApi.StuGrade_HOST).getRecent(Setting.userName, "1")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer_get);
+        } else {
+            subscription = network.getHbutApi(HbutApi.StuAllGrade_HOST).getAllGrade(Setting.userName, "1")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(observer_get);
+        }
 
         //Jsoup
-        subscription = network.getHbutApi(HbutApi.Jsoup_Host).getHtml()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer_get);
+//        subscription = network.getHbutApi(HbutApi.Jsoup_Host).getHtml()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(observer_get);
 
 
     }
