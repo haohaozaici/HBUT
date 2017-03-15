@@ -12,7 +12,7 @@ import okhttp3.Request;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -21,22 +21,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Network {
 
-    private static HbutApi hbutApi_logon;
-    private static HbutApi hbutApi_getGrade;
-    private static HbutApi hbutApi_getAllGrade;
-    private static HbutApi hbutApi_getSchedule;
-
-    private static HbutApi hbutApi_getHtml;
+    private static HbutApi sHbutApi;
 
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
-    private static CallAdapter.Factory rxjavaCallAdapterFactory = RxJavaCallAdapterFactory.create();
-
-    public OkHttpClient okHttpClient_received = new OkHttpClient.Builder()
-            .addInterceptor(new ReceivedCookiesInterceptor())
-            .build();
-    public OkHttpClient okHttpClient_add = new OkHttpClient.Builder()
-            .addInterceptor(new AddCookiesInterceptor())
-            .build();
+    private static CallAdapter.Factory rxjavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
 
     /*
     * 持久化cookie
@@ -46,62 +34,72 @@ public class Network {
 
     public HbutApi getHbutApi(String instance) {
 
+        OkHttpClient okHttpClient_received = new OkHttpClient.Builder()
+                .addInterceptor(new ReceivedCookiesInterceptor())
+                .build();
+        OkHttpClient okHttpClient_add = new OkHttpClient.Builder()
+                .addInterceptor(new AddCookiesInterceptor())
+                .build();
+
+        Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
+        CallAdapter.Factory rxjavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
+
         switch (instance) {
             case HbutApi.Account_HOST:
-                if (hbutApi_logon == null) {
+                if (sHbutApi == null) {
                     Retrofit retrofit = new Retrofit.Builder()
                             .client(okHttpClient_received)
                             .baseUrl(HbutApi.Account_HOST)
                             .addConverterFactory(gsonConverterFactory)
                             .addCallAdapterFactory(rxjavaCallAdapterFactory)
                             .build();
-                    hbutApi_logon = retrofit.create(HbutApi.class);
+                    sHbutApi = retrofit.create(HbutApi.class);
                 }
-                return hbutApi_logon;
+                return sHbutApi;
             case HbutApi.StuGrade_HOST:
-                if (hbutApi_getGrade == null) {
+                if (sHbutApi == null) {
                     Retrofit retrofit = new Retrofit.Builder()
                             .client(okHttpClient_add)
                             .baseUrl(HbutApi.StuGrade_HOST)
 //                    .addConverterFactory(gsonConverterFactory)
                             .addCallAdapterFactory(rxjavaCallAdapterFactory)
                             .build();
-                    hbutApi_getGrade = retrofit.create(HbutApi.class);
+                    sHbutApi = retrofit.create(HbutApi.class);
 
                 }
-                return hbutApi_getGrade;
+                return sHbutApi;
             case HbutApi.Schedule_Host:
-                if (hbutApi_getSchedule == null) {
+                if (sHbutApi == null) {
                     Retrofit retrofit = new Retrofit.Builder()
                             .client(okHttpClient_add)
                             .baseUrl(HbutApi.Schedule_Host)
                             .addCallAdapterFactory(rxjavaCallAdapterFactory)
                             .build();
-                    hbutApi_getSchedule = retrofit.create(HbutApi.class);
+                    sHbutApi = retrofit.create(HbutApi.class);
                 }
-                return hbutApi_getSchedule;
+                return sHbutApi;
             case HbutApi.StuAllGrade_HOST:
-                if (hbutApi_getAllGrade == null) {
+                if (sHbutApi == null) {
                     Retrofit retrofit = new Retrofit.Builder()
                             .client(okHttpClient_add)
                             .baseUrl(HbutApi.StuAllGrade_HOST)
                             .addCallAdapterFactory(rxjavaCallAdapterFactory)
                             .build();
-                    hbutApi_getAllGrade = retrofit.create(HbutApi.class);
+                    sHbutApi = retrofit.create(HbutApi.class);
 
                 }
-                return hbutApi_getAllGrade;
+                return sHbutApi;
             case HbutApi.Jsoup_Host:
-                if (hbutApi_getHtml == null) {
+                if (sHbutApi == null) {
                     Retrofit retrofit = new Retrofit.Builder()
                             .client(okHttpClient_add)
                             .baseUrl(HbutApi.Jsoup_Host)
                             .addCallAdapterFactory(rxjavaCallAdapterFactory)
                             .build();
-                    hbutApi_getHtml = retrofit.create(HbutApi.class);
+                    sHbutApi = retrofit.create(HbutApi.class);
 
                 }
-                return hbutApi_getHtml;
+                return sHbutApi;
 
             default:
                 return null;

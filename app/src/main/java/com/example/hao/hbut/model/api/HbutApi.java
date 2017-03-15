@@ -2,10 +2,10 @@ package com.example.hao.hbut.model.api;
 
 import com.example.hao.hbut.model.data.Student;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
 
 /**
  * Created by hao on 2016/10/25.

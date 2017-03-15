@@ -2,7 +2,8 @@ package com.example.hao.hbut.View.activity;
 
 import android.support.v7.app.AppCompatActivity;
 
-import rx.Subscription;
+import io.reactivex.disposables.CompositeDisposable;
+
 
 /**
  * Created by hao on 2016-09-22.
@@ -10,17 +11,19 @@ import rx.Subscription;
 
 public class BaseActivity extends AppCompatActivity {
 
-    protected Subscription subscription;
+    protected CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unsubscribe();
+        clearSubscribe();
     }
 
-    protected void unsubscribe() {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+
+    protected void clearSubscribe() {
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
         }
     }
 

@@ -23,9 +23,10 @@ import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;
 import com.example.hao.hbut.model.data.Student;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -43,43 +44,6 @@ public class LoginActivity extends BaseActivity {
     private Button logon;
 
     private String user = "", pass = "";
-
-    Observer<Student> observer_log = new Observer<Student>() {
-        @Override
-        public void onCompleted() {
-
-        }
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onNext(Student student) {
-            if (student.Status.equals("0")) {
-
-                saveLoginStatus();
-
-                Snackbar.make(name, student.Message, Snackbar.LENGTH_SHORT).show();
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Do something after 5s = 5000ms
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                }, 1000);
-
-            } else {
-                Snackbar.make(name, student.Message, Snackbar.LENGTH_LONG).show();
-            }
-
-
-        }
-    };
     private Network network = new Network();
 
     @Override
@@ -185,13 +149,59 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        subscription = network.getHbutApi(HbutApi.Account_HOST).logOn(user, pass, "Student")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer_log);
+        getLoginInfo(user, pass);
 
         Setting.setUserName(user);
         Setting.setPassword(pass);
+    }
+
+    public void getLoginInfo(String user, String pass) {
+
+        network.getHbutApi(HbutApi.Account_HOST).logOn(user, pass, "Student")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Student>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(Student student) {
+                        if (student.Status.equals("0")) {
+
+                            saveLoginStatus();
+
+                            Snackbar.make(name, student.Message, Snackbar.LENGTH_SHORT).show();
+                            final Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Do something after 5s = 5000ms
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }, 1000);
+
+                        } else {
+                            Snackbar.make(name, student.Message, Snackbar.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
     }
 
     private void saveLoginStatus() {

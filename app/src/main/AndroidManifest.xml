@@ -37,9 +37,6 @@
 
         </activity>
 
-        <activity android:name=".View.activity.TestActivity">
-
-        </activity>
     </application>
 
 

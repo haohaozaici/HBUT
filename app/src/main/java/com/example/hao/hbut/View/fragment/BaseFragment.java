@@ -2,7 +2,8 @@ package com.example.hao.hbut.View.fragment;
 
 import android.app.Fragment;
 
-import rx.Subscription;
+import io.reactivex.disposables.CompositeDisposable;
+
 
 /**
  * Created by hao on 2016/11/25.
@@ -10,17 +11,17 @@ import rx.Subscription;
 
 public class BaseFragment extends Fragment {
 
-    protected Subscription subscription;
+    protected CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unsubscribe();
+        clearSubscribe();
     }
 
-    protected void unsubscribe() {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+    protected void clearSubscribe() {
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
         }
     }
 }
