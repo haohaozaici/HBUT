@@ -1,6 +1,6 @@
 package com.example.hao.hbut.model.api;
 
-import com.example.hao.hbut.model.Setting;
+import com.example.hao.hbut.model.bean.Setting;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +23,6 @@ public class Network {
 
     private static HbutApi sHbutApi;
 
-    private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
-    private static CallAdapter.Factory rxjavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
 
     /*
     * 持久化cookie

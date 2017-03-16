@@ -1,4 +1,4 @@
-package com.example.hao.hbut.model;
+package com.example.hao.hbut.model.bean;
 
 /**
  * Created by hao on 2016-10-26.

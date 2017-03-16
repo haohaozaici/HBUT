@@ -1,6 +1,8 @@
-package com.example.hao.hbut.View.activity;
+package com.example.hao.hbut.base;
 
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.hao.hbut.model.Database;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -12,12 +14,14 @@ import io.reactivex.disposables.CompositeDisposable;
 public class BaseActivity extends AppCompatActivity {
 
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
+    public Database data = Database.instance;
 
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         clearSubscribe();
+        data.saveAllData(this);
     }
 
 

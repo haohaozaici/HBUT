@@ -1,6 +1,6 @@
 package com.example.hao.hbut.model.api;
 
-import com.example.hao.hbut.model.data.Student;
+import com.example.hao.hbut.model.bean.LogInfo;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -17,7 +17,7 @@ public interface HbutApi {
     //登录
     //http://run.hbut.edu.cn/Account/LogOnForJson?Mobile=1&UserName=1310200128&Password=1310200128&Role=Student
     @GET("LogOnForJson?Mobile=1")
-    Observable<Student> logOn(@Query("UserName") String UserName,
+    Observable<LogInfo> logOn(@Query("UserName") String UserName,
                               @Query("Password") String Password,
                               @Query("Role") String Role);
 

@@ -1,4 +1,4 @@
-package com.example.hao.hbut.model.data;
+package com.example.hao.hbut.model.bean;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.hao.hbut.View.adapter;
+package com.example.hao.hbut.Main.Sch;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.model.data.Schedule;
+import com.example.hao.hbut.model.bean.Schedule;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by hao on 2016-10-26.
  */
 
-public class SecondAdapter extends RecyclerView.Adapter<SecondAdapter.ViewHolder> {
+public class SchAdapter extends RecyclerView.Adapter<SchAdapter.ViewHolder> {
 
     ArrayList<Schedule.TimeScheduleList> timeScheduleList = new ArrayList<>();
     private Schedule mSchedule;

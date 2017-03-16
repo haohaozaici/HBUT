@@ -1,4 +1,4 @@
-package com.example.hao.hbut.View.activity;
+package com.example.hao.hbut.Main;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -6,10 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
+import com.example.hao.hbut.Main.Grade.GradeFragment;
+import com.example.hao.hbut.Main.Sch.SchFragment;
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.View.fragment.GradeFragment;
-import com.example.hao.hbut.View.fragment.MeFragment;
-import com.example.hao.hbut.View.fragment.SchFragment;
+import com.example.hao.hbut.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 

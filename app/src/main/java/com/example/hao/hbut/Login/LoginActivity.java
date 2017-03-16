@@ -1,8 +1,7 @@
-package com.example.hao.hbut.View.activity;
+package com.example.hao.hbut.Login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
@@ -18,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hao.hbut.R;
-import com.example.hao.hbut.model.Setting;
+import com.example.hao.hbut.Main.MainActivity;
+import com.example.hao.hbut.base.BaseActivity;
+import com.example.hao.hbut.model.bean.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;
-import com.example.hao.hbut.model.data.Student;
+import com.example.hao.hbut.model.bean.LogInfo;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -151,8 +152,6 @@ public class LoginActivity extends BaseActivity {
 
         getLoginInfo(user, pass);
 
-        Setting.setUserName(user);
-        Setting.setPassword(pass);
     }
 
     public void getLoginInfo(String user, String pass) {
@@ -160,19 +159,19 @@ public class LoginActivity extends BaseActivity {
         network.getHbutApi(HbutApi.Account_HOST).logOn(user, pass, "Student")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Student>() {
+                .subscribe(new Observer<LogInfo>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         compositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onNext(Student student) {
-                        if (student.Status.equals("0")) {
+                    public void onNext(LogInfo logInfo) {
+                        if (logInfo.Status.equals("0")) {
 
                             saveLoginStatus();
 
-                            Snackbar.make(name, student.Message, Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(name, logInfo.Message, Snackbar.LENGTH_SHORT).show();
                             final Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -185,7 +184,7 @@ public class LoginActivity extends BaseActivity {
                             }, 1000);
 
                         } else {
-                            Snackbar.make(name, student.Message, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(name, logInfo.Message, Snackbar.LENGTH_LONG).show();
                         }
 
                     }
@@ -205,13 +204,17 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void saveLoginStatus() {
-        SharedPreferences setting = getSharedPreferences("setting", 0);
-        SharedPreferences.Editor editor = setting.edit();
-        editor.putBoolean("isLogin", Setting.isLogin());
-        editor.putString("cookies", Setting.getCookies());
-        editor.putString("userName", Setting.getUserName());
-        editor.putString("password", Setting.getPassword());
-        editor.apply();
+        Setting.setUserName(user);
+        Setting.setPassword(pass);
+
+//        SharedPreferences setting = getSharedPreferences("setting", 0);
+//        SharedPreferences.Editor editor = setting.edit();
+//        editor.putBoolean("isLogin", Setting.isLogin());
+//        editor.putString("cookies", Setting.getCookies());
+//        editor.putString("userName", Setting.getUserName());
+//        editor.putString("password", Setting.getPassword());
+//        editor.apply();
     }
+
 
 }

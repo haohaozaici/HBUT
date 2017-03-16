@@ -1,6 +1,8 @@
-package com.example.hao.hbut.View.fragment;
+package com.example.hao.hbut.base;
 
 import android.app.Fragment;
+
+import com.example.hao.hbut.model.Database;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -12,14 +14,16 @@ import io.reactivex.disposables.CompositeDisposable;
 public class BaseFragment extends Fragment {
 
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
+    public Database data = Database.instance;
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         clearSubscribe();
+        data.saveAllData(getActivity());
     }
 
-    protected void clearSubscribe() {
+    public void clearSubscribe() {
         if (compositeDisposable != null) {
             compositeDisposable.clear();
         }
