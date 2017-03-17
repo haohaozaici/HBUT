@@ -8,4 +8,21 @@
     <string name="error">网络异常</string>
 
     <string name="cookie_unable">点击过快或cookie失效,请重新刷新或登录</string>
+
+    <!--about me-->
+    <string name="category_about">关于</string>
+    <string name="version">ver 1.0</string>
+    <string name="github_repo_title">haohaozaici</string>
+    <string name="github_repo_url">https://haohaozaici.github.io</string>
+    <string name="weixin_title">湖工大在线</string>
+    <string name="weixin_summary">请微信搜索关注湖工大在线微信公众号</string>
+    <string name="author_sina_title">湖工大在线微博</string>
+    <string name="author_sina_desc">http://weibo.com/hgdonline</string>
+    <string name="icon_designer_title">设计</string>
+    <string name="icon_designer_summary">浩浩</string>
+    <string name="open_source_license">开源代码许可证</string>
+    <string name="open_source_license_summary">GPL v3</string>
+    <string name="category_contributors">贡献者</string>
+    <string name="category_contributors_desc">感谢阿博提供账号,感谢小伙伴们的测试,感谢大家使用</string>
+
 </resources>

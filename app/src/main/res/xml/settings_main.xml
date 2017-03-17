@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <PreferenceCategory android:title="@string/category_about">
+
+        <Preference
+            android:key="version"
+            android:summary="@string/version"
+            android:title="@string/app_name" />
+        <Preference
+            android:key="github"
+            android:summary="@string/github_repo_url"
+            android:title="@string/github_repo_title" />
+        <Preference
+            android:key="weixin"
+            android:summary="@string/weixin_summary"
+            android:title="@string/weixin_title" />
+        <Preference
+            android:key="sina"
+            android:summary="@string/author_sina_desc"
+            android:title="@string/author_sina_title" />
+        <Preference
+            android:key="designer"
+            android:summary="@string/icon_designer_summary"
+            android:title="@string/icon_designer_title" />
+        <Preference
+            android:key="license"
+            android:summary="@string/open_source_license_summary"
+            android:title="@string/open_source_license" />
+        <Preference
+            android:key="contributors"
+            android:summary="@string/category_contributors_desc"
+            android:title="@string/category_contributors" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

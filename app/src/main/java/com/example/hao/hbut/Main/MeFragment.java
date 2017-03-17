@@ -2,6 +2,7 @@ package com.example.hao.hbut.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ public class MeFragment extends BaseFragment {
 
     private TextView name;
     private Button signOut;
+    private Button send_reply;
     private SmileRating smileRating;
     private static int smileRatingChecked = BaseRating.OKAY;
 
@@ -46,6 +48,14 @@ public class MeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 signOut();
+            }
+        });
+
+        send_reply = (Button) view.findViewById(R.id.send_reply);
+        send_reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(send_reply, getString(R.string.weixin_summary), Snackbar.LENGTH_LONG).show();
             }
         });
 
