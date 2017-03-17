@@ -1,5 +1,7 @@
 package com.example.hao.hbut.Main.Grade;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,11 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
 
     ArrayList<Grade.StuGradeList> stuGradeLists = new ArrayList<>();
     private Grade mGrade;
+    private Context context;
+
+    public GradeAdapter(Context context) {
+        this.context = context;
+    }
 
     public void setItem(Grade grade) {
         this.mGrade = grade;
@@ -55,7 +62,12 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
             }
             if (position > 3) {
                 holder.key.setText(stuGradeLists.get(position - 4).CourseName);
-                holder.value.setText(stuGradeLists.get(position - 4).Grade);
+                int grade = stuGradeLists.get(position - 4).Grade;
+                if (grade < 60) {
+                    holder.value.setText(grade + "");
+                    holder.value.setTextColor(context.getResources().getColor(R.color.momo));
+                }
+                holder.value.setText(stuGradeLists.get(position - 4).Grade + "");
             }
 
         }

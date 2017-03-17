@@ -64,8 +64,5 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    private void switchContent(BaseFragment[] fragments) {
 
-
-    }
 }

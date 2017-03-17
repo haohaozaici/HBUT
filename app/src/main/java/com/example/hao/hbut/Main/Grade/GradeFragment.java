@@ -37,7 +37,7 @@ public class GradeFragment extends BaseFragment {
 
     private Grade grade;
     private RecyclerView mRecyclerView;
-    private GradeAdapter mGradeAdapter = new GradeAdapter();
+    private GradeAdapter mGradeAdapter;
     private Network network = new Network();
     private ENRefreshView refreshAll;
 
@@ -73,13 +73,14 @@ public class GradeFragment extends BaseFragment {
     private void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
+        mGradeAdapter = new GradeAdapter(getActivity());
         mRecyclerView.setAdapter(mGradeAdapter);
 
         ILayoutAnimationController.setLayoutAnimation(mRecyclerView,
                 R.anim.activity_open_enter,
                 0.8f,
                 ILayoutAnimationController.IndexAlgorithm.INDEX135246
-                );
+        );
 
     }
 
@@ -118,7 +119,7 @@ public class GradeFragment extends BaseFragment {
 
                                 data.saveGrade(grade);
 
-                            }else {
+                            } else {
                                 Snackbar.make(mRecyclerView, getString(R.string.cookie_unable), Snackbar.LENGTH_SHORT).show();
                             }
                             refreshAll.setClickable(true);

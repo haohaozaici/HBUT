@@ -19,7 +19,7 @@ public class Grade {
         public String CourseName;
         public String CourseType;
         public String CourseCredit;
-        public String Grade;
+        public int Grade;
         public String GradePoint;
     }
 

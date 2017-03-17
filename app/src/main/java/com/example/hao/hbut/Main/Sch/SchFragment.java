@@ -55,7 +55,7 @@ public class SchFragment extends BaseFragment {
         excelPanel = (ExcelPanel) view.findViewById(R.id.excel_panel);
         adapter = new NewSchAdapter(getActivity());
         excelPanel.setAdapter(adapter);
-
+        loadDataDisk();
         adapter.setTopData(rowTitles);
         adapter.setLeftData(colTitles);
         if (!cells.isEmpty()) {
@@ -71,7 +71,6 @@ public class SchFragment extends BaseFragment {
                 loadData();
             }
         });
-        loadDataDisk();
 
         return view;
     }
