@@ -66,9 +66,14 @@ public enum Database {
 
     public void loadAllData(Context context) {
         mPreferences = context.getSharedPreferences(PACKAGE_DATA, Context.MODE_PRIVATE);
-        String dataJson = mPreferences.getString(PACKAGE_DATA, "{\"Grade\":\"{}\",\"Schedule\":\"{}\",\"Setting\":\"{}\"}");
-        Gson gson = new Gson();
-        mAllInfo = gson.fromJson(dataJson, AllInfo.class);
+        String dataJson = mPreferences.getString(PACKAGE_DATA, "");
+        mAllInfo = new AllInfo();
+
+        if (!dataJson.equals("")) {
+            Gson gson = new Gson();
+            mAllInfo = gson.fromJson(dataJson, AllInfo.class);
+        }
+
     }
 
     public void saveAllData(Activity activity) {
@@ -87,7 +92,7 @@ public enum Database {
         editor.apply();
     }
 
-    public void clearAll(Activity activity){
+    public void clearAll(Activity activity) {
         mAllInfo.setCells(null);
         mAllInfo.setSetting(null);
         mAllInfo.setGrade(null);

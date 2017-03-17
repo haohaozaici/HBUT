@@ -82,7 +82,10 @@ public class MeFragment extends BaseFragment {
     }
 
     public void signOut() {
-
+        setting.setLogin(false);
+        setting.setUserName("");
+        setting.setPassword("");
+        setting.setCookies("");
         data.clearAll(getActivity());
 
         Intent intent = new Intent(getActivity(), LoginActivity.class);

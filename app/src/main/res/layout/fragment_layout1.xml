@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_main_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="2.5dp"/>
+            android:padding="12dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        android:padding="6dp"
-        >
 
-        <com.example.hao.hbut.View.widget.ENRefreshView
-            android:id="@+id/refresh_all"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="4dp"
-            app:refresh_line_color="@color/colorPrimary"
-            app:refresh_line_width="12"
-            />
+    <com.example.hao.hbut.View.widget.ENRefreshView
+        android:id="@+id/refresh_all"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="18dp"
+        app:refresh_line_color="@color/colorPrimary"
+        app:refresh_line_width="12" />
 
 
-    </LinearLayout>
-
-
-</FrameLayout>
+</RelativeLayout>

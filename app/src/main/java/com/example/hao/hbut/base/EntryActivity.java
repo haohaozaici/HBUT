@@ -25,7 +25,9 @@ public class EntryActivity extends BaseActivity {
 //        Setting.setIsLogin(settings.getBoolean("isLogin", false));
 //        Setting.setUserName(settings.getString("userName", ""));
 //        Setting.setCookies(settings.getString("cookies", ""));
-        setting = data.getSetting();
+        if (data.getSetting() != null){
+            setting = data.getSetting();
+        }
 
         if (setting.isLogin()) {
             Intent intent = new Intent(EntryActivity.this, MainActivity.class);

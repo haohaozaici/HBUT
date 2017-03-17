@@ -1,23 +1,13 @@
 package com.example.hao.hbut.Main.Sch;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import com.example.hao.hbut.Login.LoginActivity;
-import com.example.hao.hbut.Main.MainActivity;
 import com.example.hao.hbut.R;
+import com.example.hao.hbut.View.widget.ENRefreshView;
 import com.example.hao.hbut.base.BaseFragment;
-import com.example.hao.hbut.base.EntryActivity;
-import com.example.hao.hbut.model.bean.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;
 import com.example.hao.hbut.model.bean.Schedule;
@@ -40,7 +30,7 @@ import okhttp3.ResponseBody;
 
 public class SchFragment extends BaseFragment {
 
-    private Button refresh;
+    private ENRefreshView refresh;
     private Network network = new Network();
     private Schedule schedule;
 
@@ -55,7 +45,6 @@ public class SchFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadDataDisk();
         initData();
     }
 
@@ -73,13 +62,16 @@ public class SchFragment extends BaseFragment {
             adapter.setMajorData(cells);
         }
 
-        refresh = (Button) view.findViewById(R.id.refresh);
+        refresh = (ENRefreshView) view.findViewById(R.id.refresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                refresh.startRefresh();
+                refresh.setClickable(false);
                 loadData();
             }
         });
+        loadDataDisk();
 
         return view;
     }
@@ -179,26 +171,24 @@ public class SchFragment extends BaseFragment {
                                 formatSchedule();
 
                                 adapter.setMajorData(cells);
-//                                mSchAdapter.setItem(schedule);
                                 Snackbar.make(excelPanel, getString(R.string.success), Snackbar.LENGTH_SHORT).show();
 
                                 data.saveSchedule(schedule);
                                 data.saveCells(cells);
                             } else {
                                 Snackbar.make(excelPanel, getString(R.string.cookie_unable), Snackbar.LENGTH_SHORT).show();
-
-                                final Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        // Do something after 5s = 5000ms
-                                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                        startActivity(intent);
-                                        getActivity().finish();
-                                    }
-                                }, 1000);
+//                                final Handler handler = new Handler();
+//                                handler.postDelayed(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        // Do something after 5s = 5000ms
+//                                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                                        startActivity(intent);
+//                                        getActivity().finish();
+//                                    }
+//                                }, 1000);
                             }
-
+                            refresh.setClickable(true);
 
                         } catch (IOException e) {
 //                Log.e("11111111", e.toString());
@@ -207,7 +197,8 @@ public class SchFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Snackbar.make(excelPanel, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
+                        refresh.setClickable(true);
                     }
 
                     @Override
@@ -218,37 +209,63 @@ public class SchFragment extends BaseFragment {
     }
 
     private void formatSchedule() {
-        //课表内容 ver X day, hor Y daytime
+
+        //new add schedule method
         for (int i = 0; i < PAGE_SIZE; i++) {
-            List<Cell> cellListX = new ArrayList<>();
-            for (int j = 0; j < 5; j++) {
-                cellListX.add(j, new Cell("", "", "", ""));
-            }
-
-//                                    cells.add(cellList);
+            List<Cell> cellList2 = new ArrayList<>();
             for (int j = 0; j < ROW_SIZE; j++) {
-
-                for (int k = 0; k < schedule.getTimeScheduleList().size(); k++) {
-                    Schedule.TimeScheduleListBean item = schedule.getTimeScheduleList().get(k);
-                    if (item.getDay() - 1 == i && item.getDayTime() - 1 == j) {
-                        Cell cell = new Cell(item.getCurName(), item.getTeacher(), item.getPlace(), item.getWeek());
-                        cellListX.add(item.getDayTime() - 1, cell);
-                        break;
-                    }
-
-                }
-
+                cellList2.add(j, new Cell("", "", "", ""));
             }
-
-            if (cellListX.size() > 5) {
-                for (int j = cellListX.size(); j > 5; j--) {
-                    cellListX.remove(j - 1);
-                }
-            }
-
-
-            cells.add(i, cellListX);
+            cells.add(i, cellList2);
         }
+
+        for (int i = 0; i < schedule.getTimeScheduleList().size(); i++) {
+            Schedule.TimeScheduleListBean item = schedule.getTimeScheduleList().get(i);
+            Cell cell = new Cell(item.getCurName(), item.getTeacher(), item.getPlace(), item.getWeek());
+            if (item.getDay() != 0 && cells.get(item.getDay() - 1).get(item.getDayTime() - 1).getAddress().equals("")) {
+                cells.get(item.getDay() - 1).set(item.getDayTime() - 1, cell);
+            } else {
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = cells.get(i).size(); j > 5; j--) {
+                cells.get(i).remove(j - 1);
+            }
+        }
+
+
+        //课表内容 ver X day, hor Y daytime
+//        for (int i = 0; i < PAGE_SIZE; i++) {
+//            List<Cell> cellListX = new ArrayList<>();
+//            for (int j = 0; j < 5; j++) {
+//                cellListX.add(j, new Cell("", "", "", ""));
+//            }
+//
+////                                    cells.add(cellList);
+//            for (int j = 0; j < ROW_SIZE; j++) {
+//
+//                for (int k = 0; k < schedule.getTimeScheduleList().size(); k++) {
+//                    Schedule.TimeScheduleListBean item = schedule.getTimeScheduleList().get(k);
+//                    if (item.getDay() - 1 == i && item.getDayTime() - 1 == j) {
+//                        Cell cell = new Cell(item.getCurName(), item.getTeacher(), item.getPlace(), item.getWeek());
+//                        cellListX.add(item.getDayTime() - 1, cell);
+//                        break;
+//                    }
+//
+//                }
+//
+//            }
+//
+//            if (cellListX.size() > 5) {
+//                for (int j = cellListX.size(); j > 5; j--) {
+//                    cellListX.remove(j - 1);
+//                }
+//            }
+//
+//
+//            cells.add(i, cellListX);
+//        }
     }
 
     private void loadDataDisk() {
@@ -260,7 +277,7 @@ public class SchFragment extends BaseFragment {
             }
             return;
         }
-        loadData();
+//        loadData();
 
     }
 }

@@ -198,6 +198,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         logon.setVisibility(View.VISIBLE);
+                        Snackbar.make(name, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
 
                     }
 

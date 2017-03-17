@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">Hbut</string>
+    <string name="app_name">HGDOnline</string>
     <string name="tab1_title">分数</string>
     <string name="tab2_title">课表</string>
-    <string name="tab3_title">me</string>
+    <string name="tab3_title">我</string>
 
     <string name="success">刷新成功</string>
-    <string name="cookie_unable">cookie失效,请重新登录</string>
+    <string name="error">网络异常</string>
+
+    <string name="cookie_unable">点击过快或cookie失效,请重新刷新或登录</string>
 </resources>

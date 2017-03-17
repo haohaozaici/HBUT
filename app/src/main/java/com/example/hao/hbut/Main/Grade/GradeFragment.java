@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.hao.hbut.R;
+import com.example.hao.hbut.View.widget.ILayoutAnimationController;
 import com.example.hao.hbut.base.BaseFragment;
 import com.example.hao.hbut.View.widget.ENRefreshView;
 import com.example.hao.hbut.model.bean.Setting;
@@ -42,7 +44,7 @@ public class GradeFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadDataDisk();
+
     }
 
     @Override
@@ -54,12 +56,16 @@ public class GradeFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 refreshAll.startRefresh();
+                refreshAll.setClickable(false);
                 loadData();
+
             }
         });
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_main_list);
         setupRecyclerView();
+
+        loadDataDisk();
 
         return view;
     }
@@ -68,6 +74,12 @@ public class GradeFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mGradeAdapter);
+
+        ILayoutAnimationController.setLayoutAnimation(mRecyclerView,
+                R.anim.activity_open_enter,
+                0.8f,
+                ILayoutAnimationController.IndexAlgorithm.INDEX135246
+                );
 
     }
 
@@ -98,19 +110,18 @@ public class GradeFragment extends BaseFragment {
                             s = s.replaceFirst("\"", "");
                             s = s.substring(0, s.length() - 1);
 
-//                            SharedPreferences setting = getActivity().getSharedPreferences("setting", 0);
-//                            SharedPreferences.Editor editor = setting.edit();
-//                            editor.putString("grade", s);
-//                            editor.apply();
+                            if (!s.substring(0, 1).equals("<")) {
+                                Gson gson = new Gson();
+                                grade = gson.fromJson(s, Grade.class);
+                                mGradeAdapter.setItem(grade);
+                                Snackbar.make(mRecyclerView, getString(R.string.success), Snackbar.LENGTH_SHORT).show();
 
-                            Gson gson = new Gson();
-                            grade = gson.fromJson(s, Grade.class);
-                            mGradeAdapter.setItem(grade);
-                            Snackbar.make(mRecyclerView, getString(R.string.success), Snackbar.LENGTH_SHORT).show();
+                                data.saveGrade(grade);
 
-                            data.saveGrade(grade);
-
-
+                            }else {
+                                Snackbar.make(mRecyclerView, getString(R.string.cookie_unable), Snackbar.LENGTH_SHORT).show();
+                            }
+                            refreshAll.setClickable(true);
                         } catch (IOException e) {
                             Log.e("11111111", e.toString());
                         }
@@ -119,6 +130,8 @@ public class GradeFragment extends BaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        Snackbar.make(mRecyclerView, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
+                        refreshAll.setClickable(true);
                     }
 
                     @Override
@@ -136,7 +149,7 @@ public class GradeFragment extends BaseFragment {
             mGradeAdapter.setItem(grade);
             return;
         }
-        loadData();
+//        loadData();
 
     }
 
