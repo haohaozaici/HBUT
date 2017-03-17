@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -35,8 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:inputType="textVisiblePassword"
                 android:hint="学号"
+                android:inputType="textVisiblePassword"
                 android:textCursorDrawable="@null" />
 
 
@@ -77,10 +78,10 @@
                 android:id="@+id/password_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:imeOptions="actionDone"
                 android:background="@null"
                 android:hint="密码"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
                 android:textCursorDrawable="@null" />
 
 
@@ -96,14 +97,31 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/logon"
+    <FrameLayout
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:layout_marginTop="12dp"
         android:layout_gravity="center"
-        android:text="登录"
-        />
+        android:layout_marginTop="12dp"
+        >
+
+        <Button
+            android:id="@+id/logon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="登录"
+            android:visibility="visible"
+            />
+
+        <com.example.hao.hbut.View.widget.ENRefreshView
+            android:id="@+id/refresh_all"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            app:refresh_line_color="@color/colorPrimary"
+            app:refresh_line_width="12"
+            />
+
+    </FrameLayout>
 
 
 </LinearLayout>

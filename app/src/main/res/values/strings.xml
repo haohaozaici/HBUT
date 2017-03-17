@@ -5,4 +5,5 @@
     <string name="tab3_title">me</string>
 
     <string name="success">刷新成功</string>
+    <string name="cookie_unable">cookie失效,请重新登录</string>
 </resources>

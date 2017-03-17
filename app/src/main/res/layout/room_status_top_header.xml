@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/top_cell_width"
+    android:layout_height="@dimen/top_cell_height">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/normal_cell_bg"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+
+        <TextView
+            android:id="@+id/week_label"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="星期四" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@color/bg_line" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_line" />
+</RelativeLayout>

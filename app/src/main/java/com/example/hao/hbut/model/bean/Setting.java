@@ -6,42 +6,50 @@ package com.example.hao.hbut.model.bean;
 
 public class Setting {
 
-    public static boolean isLogin = false;
-    public static String cookies = "";
-    public static String userName = "";
-    public static String password = "";
+    private static class SingletonHolder{
+        public static Setting instance = new Setting();
+    }
 
+    private Setting(){}
 
-    public static boolean isLogin() {
+    public static Setting newInstance(){
+        return SingletonHolder.instance;
+    }
+
+    public boolean isLogin = false;
+    public String cookies = "";
+    public String userName = "";
+    public String password = "";
+
+    public boolean isLogin() {
         return isLogin;
     }
 
-    public static void setIsLogin(boolean isLogin) {
-        Setting.isLogin = isLogin;
+    public void setLogin(boolean login) {
+        isLogin = login;
     }
 
-    public static String getCookies() {
+    public String getCookies() {
         return cookies;
     }
 
-    public static void setCookies(String cookies) {
-        Setting.cookies = cookies;
+    public void setCookies(String cookies) {
+        this.cookies = cookies;
     }
 
-    public static String getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public static void setUserName(String userName) {
-        Setting.userName = userName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public static String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public static void setPassword(String password) {
-        Setting.password = password;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
 }

@@ -14,4 +14,8 @@
 
     <color name="splash_background">#DFDFDF</color>
     <color name="grey_logon">#a18a8a8a</color>
+
+    <color name="normal_cell_bg">#FEFFFE</color>
+
+    <color name="momo">#F596AA</color>
 </resources>

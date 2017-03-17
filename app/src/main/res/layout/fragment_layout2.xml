@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_2_list"
+    <cn.zhouchaoyuan.excelpanel.ExcelPanel
+        android:id="@+id/excel_panel"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="2.5dp"/>
+        android:layout_height="wrap_content"
+        app:left_cell_width="@dimen/left_cell_width"
+        app:normal_cell_width="@dimen/top_cell_width"
+        app:top_cell_height="@dimen/top_cell_height"
+
+        />
 
     <Button
         android:id="@+id/refresh"

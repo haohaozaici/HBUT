@@ -3,6 +3,7 @@ package com.example.hao.hbut.base;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.hao.hbut.model.Database;
+import com.example.hao.hbut.model.bean.Setting;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -15,13 +16,20 @@ public class BaseActivity extends AppCompatActivity {
 
     protected CompositeDisposable compositeDisposable = new CompositeDisposable();
     public Database data = Database.instance;
+    public static Setting setting = Setting.newInstance();
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        data.saveSetting(setting);
+        data.saveAllData(this);
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         clearSubscribe();
-        data.saveAllData(this);
     }
 
 
@@ -29,6 +37,10 @@ public class BaseActivity extends AppCompatActivity {
         if (compositeDisposable != null) {
             compositeDisposable.clear();
         }
+    }
+
+    public static Setting getSetting() {
+        return setting;
     }
 
 //    public static void openWebsite(Activity context, String url) {

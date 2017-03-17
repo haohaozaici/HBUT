@@ -18,8 +18,8 @@ import android.widget.TextView;
 
 import com.example.hao.hbut.R;
 import com.example.hao.hbut.Main.MainActivity;
+import com.example.hao.hbut.View.widget.ENRefreshView;
 import com.example.hao.hbut.base.BaseActivity;
-import com.example.hao.hbut.model.bean.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;
 import com.example.hao.hbut.model.bean.LogInfo;
@@ -43,6 +43,7 @@ public class LoginActivity extends BaseActivity {
     private View line2;
     private ImageView img2;
     private Button logon;
+    private ENRefreshView refresh;
 
     private String user = "", pass = "";
     private Network network = new Network();
@@ -50,7 +51,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.logon_layout);
+        setContentView(R.layout.login_layout);
 
         line1 = (View) findViewById(R.id.line1);
         line2 = (View) findViewById(R.id.line2);
@@ -128,6 +129,7 @@ public class LoginActivity extends BaseActivity {
         });
 
         logon = (Button) findViewById(R.id.logon);
+        refresh = (ENRefreshView) findViewById(R.id.refresh_all);
         logon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,8 +151,11 @@ public class LoginActivity extends BaseActivity {
             Snackbar.make(logon, "密码不能为空", Snackbar.LENGTH_SHORT).show();
             return;
         }
+        refresh.setDuration(3000);
+        refresh.startRefresh();
 
         getLoginInfo(user, pass);
+        logon.setVisibility(View.INVISIBLE);
 
     }
 
@@ -185,12 +190,14 @@ public class LoginActivity extends BaseActivity {
 
                         } else {
                             Snackbar.make(name, logInfo.Message, Snackbar.LENGTH_LONG).show();
+                            logon.setVisibility(View.VISIBLE);
                         }
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        logon.setVisibility(View.VISIBLE);
 
                     }
 
@@ -204,16 +211,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void saveLoginStatus() {
-        Setting.setUserName(user);
-        Setting.setPassword(pass);
-
-//        SharedPreferences setting = getSharedPreferences("setting", 0);
-//        SharedPreferences.Editor editor = setting.edit();
-//        editor.putBoolean("isLogin", Setting.isLogin());
-//        editor.putString("cookies", Setting.getCookies());
-//        editor.putString("userName", Setting.getUserName());
-//        editor.putString("password", Setting.getPassword());
-//        editor.apply();
+        setting.setUserName(user);
+        setting.setPassword(pass);
     }
 
 

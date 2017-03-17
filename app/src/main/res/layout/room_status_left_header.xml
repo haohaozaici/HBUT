@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="@dimen/left_cell_width"
+    android:layout_height="@dimen/left_cell_height"
+    >
+
+    <LinearLayout
+        android:id="@+id/left_item_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/normal_cell_bg"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/room_number_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="#FF333333"
+            android:textSize="12sp"
+            android:text="8:20-9:55" />
+
+        <TextView
+            android:id="@+id/room_type_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="#FF999999"
+            android:textSize="10sp"
+            android:text="第一二节" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@color/bg_line" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_line" />
+</RelativeLayout>

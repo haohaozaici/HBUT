@@ -15,7 +15,7 @@ import com.example.hao.hbut.model.bean.Setting;
  * Created by hao on 2016-10-26.
  */
 
-public class EntryActivity extends AppCompatActivity {
+public class EntryActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,9 +25,9 @@ public class EntryActivity extends AppCompatActivity {
 //        Setting.setIsLogin(settings.getBoolean("isLogin", false));
 //        Setting.setUserName(settings.getString("userName", ""));
 //        Setting.setCookies(settings.getString("cookies", ""));
+        setting = data.getSetting();
 
-
-        if (Setting.isLogin()) {
+        if (setting.isLogin()) {
             Intent intent = new Intent(EntryActivity.this, MainActivity.class);
             startActivity(intent);
 

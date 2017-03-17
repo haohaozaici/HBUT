@@ -2,37 +2,50 @@ package com.example.hao.hbut.model.bean;
 
 import android.content.Context;
 
+import com.example.hao.hbut.Main.Sch.Cell;
+
+import java.util.List;
+
 /**
  * Created by hao on 2017/2/9.
  */
 
 public class AllInfo {
 
-    public Grade mGrade;
-    public Schedule mSchedule;
-    public Setting mSetting;
+    public Grade Grade;
+    public Schedule Schedule;
+    public Setting Setting;
+    public List<List<Cell>> cells;
 
     public Grade getGrade() {
-        return mGrade;
+        return Grade;
     }
 
     public void setGrade(Grade grade) {
-        mGrade = grade;
+        Grade = grade;
     }
 
     public Schedule getSchedule() {
-        return mSchedule;
+        return Schedule;
     }
 
     public void setSchedule(Schedule schedule) {
-        mSchedule = schedule;
+        Schedule = schedule;
     }
 
     public Setting getSetting() {
-        return mSetting;
+        return Setting;
     }
 
     public void setSetting(Setting setting) {
-        mSetting = setting;
+        Setting = setting;
+    }
+
+    public List<List<Cell>> getCells() {
+        return cells;
+    }
+
+    public void setCells(List<List<Cell>> cells) {
+        this.cells = cells;
     }
 }

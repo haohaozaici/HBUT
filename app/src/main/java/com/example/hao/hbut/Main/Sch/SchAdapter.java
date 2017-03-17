@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class SchAdapter extends RecyclerView.Adapter<SchAdapter.ViewHolder> {
 
-    ArrayList<Schedule.TimeScheduleList> timeScheduleList = new ArrayList<>();
+    ArrayList<Schedule.TimeScheduleListBean> timeScheduleList = new ArrayList<>();
     private Schedule mSchedule;
 
     public void setItem(Schedule schedule) {
@@ -38,22 +38,22 @@ public class SchAdapter extends RecyclerView.Adapter<SchAdapter.ViewHolder> {
             switch (position) {
                 case 0:
                     holder.key.setText("Title");
-                    holder.value.setText(mSchedule.Title);
+                    holder.value.setText(mSchedule.getTitle());
                     holder.key2.setText("");
                     holder.value2.setText("");
                     break;
                 case 1:
                     holder.key.setText("Content");
-                    holder.value.setText(mSchedule.Content);
+                    holder.value.setText(mSchedule.getContent());
                     holder.key2.setText("");
                     holder.value2.setText("");
                     break;
             }
             if (position > 1) {
-                holder.key.setText(timeScheduleList.get(position - 2).CurName);
-                holder.value.setText(timeScheduleList.get(position - 2).Place);
-                holder.key2.setText(timeScheduleList.get(position - 2).Teacher);
-                holder.value2.setText(timeScheduleList.get(position - 2).Week);
+                holder.key.setText(timeScheduleList.get(position - 2).getCurName());
+                holder.value.setText(timeScheduleList.get(position - 2).getPlace());
+                holder.key2.setText(timeScheduleList.get(position - 2).getTeacher());
+                holder.value2.setText(timeScheduleList.get(position - 2).getWeek());
             }
         }
 
@@ -62,7 +62,7 @@ public class SchAdapter extends RecyclerView.Adapter<SchAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         if (mSchedule != null)
-            timeScheduleList = (ArrayList<Schedule.TimeScheduleList>) mSchedule.TimeScheduleList;
+            timeScheduleList = (ArrayList<Schedule.TimeScheduleListBean>) mSchedule.getTimeScheduleList();
         return timeScheduleList == null ? 0 : (timeScheduleList.size() + 2);
 
     }

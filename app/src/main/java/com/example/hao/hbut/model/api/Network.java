@@ -1,10 +1,12 @@
 package com.example.hao.hbut.model.api;
 
+import com.example.hao.hbut.base.BaseActivity;
 import com.example.hao.hbut.model.bean.Setting;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -22,6 +24,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Network {
 
     private static HbutApi sHbutApi;
+    private Retrofit retrofit;
+
+    OkHttpClient okHttpClient_received = new OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .addInterceptor(new ReceivedCookiesInterceptor())
+            .build();
+    OkHttpClient okHttpClient_add = new OkHttpClient.Builder()
+            .connectTimeout(5, TimeUnit.SECONDS)
+            .addInterceptor(new AddCookiesInterceptor())
+            .build();
+
+    Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
+    CallAdapter.Factory rxjavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
 
 
     /*
@@ -29,76 +44,58 @@ public class Network {
     * 2016-10-25 16:21:49 by haohaozaici
     * */
     private HashSet<String> cookies = new HashSet<>();
+    private Setting setting = BaseActivity.getSetting();
 
     public HbutApi getHbutApi(String instance) {
 
-        OkHttpClient okHttpClient_received = new OkHttpClient.Builder()
-                .addInterceptor(new ReceivedCookiesInterceptor())
-                .build();
-        OkHttpClient okHttpClient_add = new OkHttpClient.Builder()
-                .addInterceptor(new AddCookiesInterceptor())
-                .build();
-
-        Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
-        CallAdapter.Factory rxjavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
-
         switch (instance) {
             case HbutApi.Account_HOST:
-                if (sHbutApi == null) {
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .client(okHttpClient_received)
-                            .baseUrl(HbutApi.Account_HOST)
-                            .addConverterFactory(gsonConverterFactory)
-                            .addCallAdapterFactory(rxjavaCallAdapterFactory)
-                            .build();
-                    sHbutApi = retrofit.create(HbutApi.class);
-                }
+                retrofit = new Retrofit.Builder()
+                        .client(okHttpClient_received)
+                        .baseUrl(HbutApi.Account_HOST)
+                        .addConverterFactory(gsonConverterFactory)
+                        .addCallAdapterFactory(rxjavaCallAdapterFactory)
+                        .build();
+                sHbutApi = retrofit.create(HbutApi.class);
+
                 return sHbutApi;
             case HbutApi.StuGrade_HOST:
-                if (sHbutApi == null) {
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .client(okHttpClient_add)
-                            .baseUrl(HbutApi.StuGrade_HOST)
+                retrofit = new Retrofit.Builder()
+                        .client(okHttpClient_add)
+                        .baseUrl(HbutApi.StuGrade_HOST)
 //                    .addConverterFactory(gsonConverterFactory)
-                            .addCallAdapterFactory(rxjavaCallAdapterFactory)
-                            .build();
-                    sHbutApi = retrofit.create(HbutApi.class);
+                        .addCallAdapterFactory(rxjavaCallAdapterFactory)
+                        .build();
+                sHbutApi = retrofit.create(HbutApi.class);
 
-                }
                 return sHbutApi;
             case HbutApi.Schedule_Host:
-                if (sHbutApi == null) {
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .client(okHttpClient_add)
-                            .baseUrl(HbutApi.Schedule_Host)
-                            .addCallAdapterFactory(rxjavaCallAdapterFactory)
-                            .build();
-                    sHbutApi = retrofit.create(HbutApi.class);
-                }
+                retrofit = new Retrofit.Builder()
+                        .client(okHttpClient_add)
+                        .baseUrl(HbutApi.Schedule_Host)
+                        .addCallAdapterFactory(rxjavaCallAdapterFactory)
+                        .build();
+                sHbutApi = retrofit.create(HbutApi.class);
+
                 return sHbutApi;
             case HbutApi.StuAllGrade_HOST:
-                if (sHbutApi == null) {
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .client(okHttpClient_add)
-                            .baseUrl(HbutApi.StuAllGrade_HOST)
-                            .addCallAdapterFactory(rxjavaCallAdapterFactory)
-                            .build();
-                    sHbutApi = retrofit.create(HbutApi.class);
+                retrofit = new Retrofit.Builder()
+                        .client(okHttpClient_add)
+                        .baseUrl(HbutApi.StuAllGrade_HOST)
+                        .addCallAdapterFactory(rxjavaCallAdapterFactory)
+                        .build();
+                sHbutApi = retrofit.create(HbutApi.class);
 
-                }
                 return sHbutApi;
             case HbutApi.Jsoup_Host:
-                if (sHbutApi == null) {
-                    Retrofit retrofit = new Retrofit.Builder()
-                            .client(okHttpClient_add)
-                            .baseUrl(HbutApi.Jsoup_Host)
-                            .addCallAdapterFactory(rxjavaCallAdapterFactory)
-                            .build();
-                    sHbutApi = retrofit.create(HbutApi.class);
+                retrofit = new Retrofit.Builder()
+                        .client(okHttpClient_add)
+                        .baseUrl(HbutApi.Jsoup_Host)
+                        .addCallAdapterFactory(rxjavaCallAdapterFactory)
+                        .build();
+                sHbutApi = retrofit.create(HbutApi.class);
 
-                }
                 return sHbutApi;
-
             default:
                 return null;
         }
@@ -115,7 +112,7 @@ public class Network {
                     cookies.add(header);
                 }
 
-                Setting.setIsLogin(true);
+                setting.setLogin(true);
 
                 ArrayList<String> cookiesArray = new ArrayList<>();
                 for (String cookie : cookies) {
@@ -129,7 +126,7 @@ public class Network {
                     cookie2 += cookie;
                 }
 
-                Setting.setCookies(cookie2);
+                setting.setCookies(cookie2);
 
 //                Log.e("login name + cookies", Setting.getUserName() + cookie2);
             }
@@ -144,7 +141,8 @@ public class Network {
             Request.Builder builder = chain.request().newBuilder();
 
 //            Log.e("get information name", Setting.getUserName());
-            builder.addHeader("Cookie", Setting.getCookies());
+            builder.addHeader("Cookie", setting.getCookies());
+//            builder.addHeader("Cookie", "");
 //            Log.e("OkHttp", "Adding Header: " + Setting.getCookies());
 
             // This is done so I know which headers are being added;

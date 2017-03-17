@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +65,7 @@ public class GradeFragment extends BaseFragment {
     }
 
     private void setupRecyclerView() {
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mGradeAdapter);
 
@@ -72,7 +73,7 @@ public class GradeFragment extends BaseFragment {
 
     private void loadData() {
         clearSubscribe();
-        network.getHbutApi(HbutApi.StuAllGrade_HOST).getAllGrade(Setting.userName, "1")
+        network.getHbutApi(HbutApi.StuGrade_HOST).getRecent(setting.getUserName(), "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -111,13 +112,13 @@ public class GradeFragment extends BaseFragment {
 
 
                         } catch (IOException e) {
-//                Log.e("11111111", e.toString());
+                            Log.e("11111111", e.toString());
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -129,18 +130,13 @@ public class GradeFragment extends BaseFragment {
     }
 
     private void loadDataDisk() {
-//        SharedPreferences setting = getActivity().getSharedPreferences("setting", 0);
-//        String stringGrade = setting.getString("grade", "");
-//        if (!stringGrade.equals("")) {
-//            Gson gson = new Gson();
-//            grade = gson.fromJson(stringGrade, Grade.class);
-//            mGradeAdapter.setItem(grade);
-//        }
 
-        if (!data.getGrade().AverageGradePoint.equals("")){
+        if (data.getGrade() != null) {
             grade = data.getGrade();
             mGradeAdapter.setItem(grade);
+            return;
         }
+        loadData();
 
     }
 
