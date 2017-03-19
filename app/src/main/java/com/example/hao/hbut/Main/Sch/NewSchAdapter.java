@@ -37,7 +37,7 @@ public class NewSchAdapter extends BaseExcelPanelAdapter<RowTitle, ColTitle, Cel
 
     @Override
     public void onBindCellViewHolder(RecyclerView.ViewHolder holder, int verticalPosition, int horizontalPosition) {
-        Cell cell = getMajorItem(horizontalPosition, verticalPosition);
+        Cell cell = getMajorItem(verticalPosition, horizontalPosition);
         if (null == holder || !(holder instanceof CellHolder) || cell == null) {
             return;
         }

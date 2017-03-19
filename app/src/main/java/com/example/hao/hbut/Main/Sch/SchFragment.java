@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.hao.hbut.R;
 import com.example.hao.hbut.View.widget.ENRefreshView;
 import com.example.hao.hbut.base.BaseFragment;
@@ -221,8 +222,8 @@ public class SchFragment extends BaseFragment {
         for (int i = 0; i < schedule.getTimeScheduleList().size(); i++) {
             Schedule.TimeScheduleListBean item = schedule.getTimeScheduleList().get(i);
             Cell cell = new Cell(item.getCurName(), item.getTeacher(), item.getPlace(), item.getWeek());
-            if (item.getDay() != 0 && cells.get(item.getDay() - 1).get(item.getDayTime() - 1).getAddress().equals("")) {
-                cells.get(item.getDay() - 1).set(item.getDayTime() - 1, cell);
+            if (item.getDay() != 0 && cells.get(item.getDayTime() - 1).get(item.getDay() - 1).getAddress().equals("")) {
+                cells.get(item.getDayTime() - 1).set(item.getDay() - 1, cell);
             } else {
             }
         }
@@ -278,5 +279,9 @@ public class SchFragment extends BaseFragment {
         }
 //        loadData();
 
+    }
+
+    public static void clearCells(){
+        cells.clear();
     }
 }

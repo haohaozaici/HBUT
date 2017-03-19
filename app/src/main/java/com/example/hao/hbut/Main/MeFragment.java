@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.hao.hbut.Login.LoginActivity;
+import com.example.hao.hbut.Main.Sch.SchFragment;
 import com.example.hao.hbut.R;
 import com.example.hao.hbut.base.BaseFragment;
 import com.hsalf.smilerating.BaseRating;
@@ -96,6 +97,7 @@ public class MeFragment extends BaseFragment {
         setting.setUserName("");
         setting.setPassword("");
         setting.setCookies("");
+        SchFragment.clearCells();
         data.clearAll(getActivity());
 
         Intent intent = new Intent(getActivity(), LoginActivity.class);

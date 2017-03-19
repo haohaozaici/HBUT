@@ -45,29 +45,28 @@ public class GradeAdapter extends RecyclerView.Adapter<GradeAdapter.ViewHolder> 
             switch (position) {
                 case 0:
                     holder.key.setText("AverageGradePoint");
-                    holder.value.setText(mGrade.AverageGradePoint);
-                    break;
+                    holder.value.setText(mGrade.getAverageGradePoint());
+                    return;
                 case 1:
                     holder.key.setText("TotalGradePoint");
-                    holder.value.setText(mGrade.TotalGradePoint);
-                    break;
+                    holder.value.setText(mGrade.getTotalGradePoint());
+                    return;
                 case 2:
                     holder.key.setText("Title");
-                    holder.value.setText(mGrade.Title);
-                    break;
+                    holder.value.setText(mGrade.getTitle());
+                    return;
                 case 3:
                     holder.key.setText("Name");
-                    holder.value.setText(mGrade.Name);
-                    break;
+                    holder.value.setText(mGrade.getName());
+                    return;
             }
             if (position > 3) {
-                holder.key.setText(stuGradeLists.get(position - 4).CourseName);
-                int grade = stuGradeLists.get(position - 4).Grade;
+                holder.key.setText(stuGradeLists.get(position - 4).getCourseName());
+                int grade = stuGradeLists.get(position - 4).getGrade();
+                holder.value.setText(grade + "");
                 if (grade < 60) {
-                    holder.value.setText(grade + "");
                     holder.value.setTextColor(context.getResources().getColor(R.color.momo));
                 }
-                holder.value.setText(stuGradeLists.get(position - 4).Grade + "");
             }
 
         }

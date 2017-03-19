@@ -27,11 +27,11 @@ public class Network {
     private Retrofit retrofit;
 
     OkHttpClient okHttpClient_received = new OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.SECONDS)
+            .connectTimeout(4, TimeUnit.SECONDS)
             .addInterceptor(new ReceivedCookiesInterceptor())
             .build();
     OkHttpClient okHttpClient_add = new OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.SECONDS)
+            .connectTimeout(4, TimeUnit.SECONDS)
             .addInterceptor(new AddCookiesInterceptor())
             .build();
 

@@ -98,13 +98,13 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @NeedsPermission(Manifest.permission.READ_PHONE_STATE)
+    @NeedsPermission({Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void needPhoneState() {
 
     }
 
     //请求权限前提示消息
-    @OnShowRationale(Manifest.permission.READ_PHONE_STATE)
+    @OnShowRationale({Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showRationaleForCamera(final PermissionRequest request) {
         new AlertDialog.Builder(this)
                 .setMessage("我们申请手机权限仅用来统计用户，请允许哟...")
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity {
     }
 
     //权限被拒绝提醒
-    @OnPermissionDenied(Manifest.permission.READ_PHONE_STATE)
+    @OnPermissionDenied({Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showDeniedForCamera() {
         Snackbar.make(navigationView, "权限被拒绝，呜呜呜...", Snackbar.LENGTH_LONG)
                 .setAction("允许", new View.OnClickListener() {
