@@ -16,7 +16,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 //        CrashReport.initCrashReport(getApplicationContext(), "95745e5bb2", false);
-        Bugly.init(getApplicationContext(), "95745e5bb2", true);
+        Bugly.init(getApplicationContext(), "95745e5bb2", false);
         Database.instance.init(this);
     }
 }
