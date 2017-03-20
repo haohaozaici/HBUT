@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.hao.hbut"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -40,6 +40,8 @@ dependencies {
     //ui
     compile 'com.github.sujithkanna:smileyrating:1.5.0'
     compile 'cn.zhouchaoyuan:excelpanel:1.0.2'
+
+    //util
     compile 'com.github.hotchemi:permissionsdispatcher:2.3.1'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
     compile 'com.tencent.bugly:crashreport_upgrade:1.2.4'
