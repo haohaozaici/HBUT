@@ -1,11 +1,14 @@
 package com.example.hao.hbut.Main.Sch;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.hao.hbut.Main.RefreshDialogFragment;
+import com.example.hao.hbut.Main.Sch.ListDialog.SchDialogFragment;
 import com.example.hao.hbut.R;
 import com.example.hao.hbut.View.widget.ENRefreshView;
 import com.example.hao.hbut.base.BaseFragment;
@@ -36,12 +39,14 @@ public class SchFragment extends BaseFragment {
     private Schedule schedule;
 
     private ExcelPanel excelPanel;
-    private NewSchAdapter adapter;
+    private SchAdapter adapter;
     private static List<RowTitle> rowTitles;
     private static List<ColTitle> colTitles;
     private static List<List<Cell>> cells = new ArrayList<>();
     public static final int PAGE_SIZE = 5;
     public static final int ROW_SIZE = 7;
+
+    private DialogFragment refreshDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +58,10 @@ public class SchFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layout2, container, false);
 
+        refreshDialog = new RefreshDialogFragment();
+        refreshDialog.setCancelable(false);
         excelPanel = (ExcelPanel) view.findViewById(R.id.excel_panel);
-        adapter = new NewSchAdapter(getActivity());
+        adapter = new SchAdapter(getActivity(), mListener);
         excelPanel.setAdapter(adapter);
         loadDataDisk();
         adapter.setTopData(rowTitles);
@@ -69,6 +76,7 @@ public class SchFragment extends BaseFragment {
             public void onClick(View view) {
                 refresh.startRefresh();
                 refresh.setClickable(false);
+                refreshDialog.show(getFragmentManager(), "missiles");
                 loadData();
             }
         });
@@ -156,12 +164,10 @@ public class SchFragment extends BaseFragment {
                     public void onNext(ResponseBody responseBody) {
                         try {
 
-
                             String s = responseBody.string();
                             s = s.replaceAll("\\\\", "");
                             s = s.replaceFirst("\"", "");
                             s = s.substring(0, s.length() - 1);
-
 
                             // TODO: 2017/3/17  cookies失效
                             if (!s.substring(0, 1).equals("<")) {
@@ -177,18 +183,9 @@ public class SchFragment extends BaseFragment {
                                 data.saveCells(cells);
                             } else {
                                 Snackbar.make(excelPanel, getString(R.string.cookie_unable), Snackbar.LENGTH_SHORT).show();
-//                                final Handler handler = new Handler();
-//                                handler.postDelayed(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        // Do something after 5s = 5000ms
-//                                        Intent intent = new Intent(getActivity(), LoginActivity.class);
-//                                        startActivity(intent);
-//                                        getActivity().finish();
-//                                    }
-//                                }, 1000);
                             }
                             refresh.setClickable(true);
+                            refreshDialog.dismiss();
 
                         } catch (IOException e) {
 //                Log.e("11111111", e.toString());
@@ -199,6 +196,8 @@ public class SchFragment extends BaseFragment {
                     public void onError(Throwable e) {
                         Snackbar.make(excelPanel, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
                         refresh.setClickable(true);
+                        refreshDialog.dismiss();
+
                     }
 
                     @Override
@@ -234,38 +233,6 @@ public class SchFragment extends BaseFragment {
             }
         }
 
-
-        //课表内容 ver X day, hor Y daytime
-//        for (int i = 0; i < PAGE_SIZE; i++) {
-//            List<Cell> cellListX = new ArrayList<>();
-//            for (int j = 0; j < 5; j++) {
-//                cellListX.add(j, new Cell("", "", "", ""));
-//            }
-//
-////                                    cells.add(cellList);
-//            for (int j = 0; j < ROW_SIZE; j++) {
-//
-//                for (int k = 0; k < schedule.getTimeScheduleList().size(); k++) {
-//                    Schedule.TimeScheduleListBean item = schedule.getTimeScheduleList().get(k);
-//                    if (item.getDay() - 1 == i && item.getDayTime() - 1 == j) {
-//                        Cell cell = new Cell(item.getCurName(), item.getTeacher(), item.getPlace(), item.getWeek());
-//                        cellListX.add(item.getDayTime() - 1, cell);
-//                        break;
-//                    }
-//
-//                }
-//
-//            }
-//
-//            if (cellListX.size() > 5) {
-//                for (int j = cellListX.size(); j > 5; j--) {
-//                    cellListX.remove(j - 1);
-//                }
-//            }
-//
-//
-//            cells.add(i, cellListX);
-//        }
     }
 
     private void loadDataDisk() {
@@ -275,13 +242,24 @@ public class SchFragment extends BaseFragment {
             if (data.getCells() != null) {
                 cells = data.getCells();
             }
-            return;
         }
 //        loadData();
 
     }
 
-    public static void clearCells(){
+    public static void clearCells() {
         cells.clear();
     }
+
+    public View.OnClickListener mListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            showDialog();
+        }
+
+        private void showDialog() {
+            DialogFragment dialog = new SchDialogFragment();
+            dialog.show(getFragmentManager(), "missiles");
+        }
+    };
 }

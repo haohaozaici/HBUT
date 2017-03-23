@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.textservice.TextInfo;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -17,14 +18,15 @@ import cn.zhouchaoyuan.excelpanel.BaseExcelPanelAdapter;
  * Created by haohao on 2017/3/16.
  */
 
-public class NewSchAdapter extends BaseExcelPanelAdapter<RowTitle, ColTitle, Cell> {
+public class SchAdapter extends BaseExcelPanelAdapter<RowTitle, ColTitle, Cell> {
 
     private Context context;
     private View.OnClickListener block;
 
-    public NewSchAdapter(Context context) {
+    public SchAdapter(Context context, View.OnClickListener block) {
         super(context);
         this.context = context;
+        this.block = block;
     }
 
     //======================normal cell=====================================
@@ -46,6 +48,7 @@ public class NewSchAdapter extends BaseExcelPanelAdapter<RowTitle, ColTitle, Cel
         viewHolder.teacher_name.setText(cell.getTeacherName());
         viewHolder.address.setText(cell.getAddress());
         viewHolder.week.setText(cell.getWeek());
+        viewHolder.pms_cell_container.setOnClickListener(block);
 
 
     }
@@ -55,6 +58,7 @@ public class NewSchAdapter extends BaseExcelPanelAdapter<RowTitle, ColTitle, Cel
         private TextView teacher_name;
         private TextView address;
         private TextView week;
+        private LinearLayout pms_cell_container;
 
         public CellHolder(View itemView) {
             super(itemView);
@@ -63,6 +67,7 @@ public class NewSchAdapter extends BaseExcelPanelAdapter<RowTitle, ColTitle, Cel
             teacher_name = (TextView) itemView.findViewById(R.id.teacher_name);
             address = (TextView) itemView.findViewById(R.id.address);
             week = (TextView) itemView.findViewById(R.id.week);
+            pms_cell_container = (LinearLayout) itemView.findViewById(R.id.pms_cell_container);
         }
     }
 

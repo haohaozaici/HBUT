@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/top_cell_width"
-    android:layout_height="@dimen/left_cell_height">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="@dimen/top_cell_width"
+                android:layout_height="@dimen/left_cell_height">
 
     <LinearLayout
         android:id="@+id/pms_cell_container"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="计算机网络" />
+            android:text="计算机网络"/>
 
         <TextView
             android:id="@+id/teacher_name"
@@ -26,21 +26,23 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="朱莉" />
+            android:text="朱莉"/>
+
         <TextView
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="1-004 4-13" />
+            android:text="1-004 4-13"/>
+
         <TextView
             android:id="@+id/week"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="第1-10周" />
+            android:text="第1-10周"/>
 
     </LinearLayout>
 
@@ -49,11 +51,11 @@
         android:layout_width="1px"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:background="@color/bg_line" />
+        android:background="@color/bg_line"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_alignParentBottom="true"
-        android:background="@color/bg_line" />
+        android:background="@color/bg_line"/>
 </RelativeLayout>

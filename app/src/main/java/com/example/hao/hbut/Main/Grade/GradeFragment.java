@@ -1,6 +1,6 @@
 package com.example.hao.hbut.Main.Grade;
 
-import android.content.SharedPreferences;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,13 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
+import com.example.hao.hbut.Main.RefreshDialogFragment;
 import com.example.hao.hbut.R;
+import com.example.hao.hbut.View.widget.ENRefreshView;
 import com.example.hao.hbut.View.widget.ILayoutAnimationController;
 import com.example.hao.hbut.base.BaseFragment;
-import com.example.hao.hbut.View.widget.ENRefreshView;
-import com.example.hao.hbut.model.bean.Setting;
 import com.example.hao.hbut.model.api.HbutApi;
 import com.example.hao.hbut.model.api.Network;
 import com.example.hao.hbut.model.bean.Grade;
@@ -40,6 +39,7 @@ public class GradeFragment extends BaseFragment {
     private GradeAdapter mGradeAdapter;
     private Network network = new Network();
     private ENRefreshView refreshAll;
+    private DialogFragment refreshDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,12 +51,15 @@ public class GradeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layout1, container, false);
 
+        refreshDialog = new RefreshDialogFragment();
+        refreshDialog.setCancelable(false);
         refreshAll = (ENRefreshView) view.findViewById(R.id.refresh_all);
         refreshAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 refreshAll.startRefresh();
                 refreshAll.setClickable(false);
+                refreshDialog.show(getFragmentManager(), "missiles");
                 loadData();
 
             }
@@ -122,6 +125,7 @@ public class GradeFragment extends BaseFragment {
                             } else {
                                 Snackbar.make(mRecyclerView, getString(R.string.cookie_unable), Snackbar.LENGTH_SHORT).show();
                             }
+                            refreshDialog.dismiss();
                             refreshAll.setClickable(true);
                         } catch (IOException e) {
                             Log.e("11111111", e.toString());
@@ -133,6 +137,8 @@ public class GradeFragment extends BaseFragment {
                         e.printStackTrace();
                         Snackbar.make(mRecyclerView, getString(R.string.error), Snackbar.LENGTH_SHORT).show();
                         refreshAll.setClickable(true);
+                        refreshDialog.dismiss();
+
                     }
 
                     @Override
@@ -148,7 +154,6 @@ public class GradeFragment extends BaseFragment {
         if (data.getGrade() != null) {
             grade = data.getGrade();
             mGradeAdapter.setItem(grade);
-            return;
         }
 //        loadData();
 
