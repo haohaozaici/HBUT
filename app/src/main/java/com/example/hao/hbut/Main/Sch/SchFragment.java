@@ -210,6 +210,7 @@ public class SchFragment extends BaseFragment {
     private void formatSchedule() {
 
         //new add schedule method
+        //创建 5 * 7 数组对象cells
         for (int i = 0; i < PAGE_SIZE; i++) {
             List<Cell> cellList2 = new ArrayList<>();
             for (int j = 0; j < ROW_SIZE; j++) {
@@ -218,6 +219,7 @@ public class SchFragment extends BaseFragment {
             cells.add(i, cellList2);
         }
 
+        //根据时间坐标set item数据
         for (int i = 0; i < schedule.getTimeScheduleList().size(); i++) {
             Schedule.TimeScheduleListBean item = schedule.getTimeScheduleList().get(i);
             Cell cell = new Cell(item.getCurName(), item.getTeacher(), item.getPlace(), item.getWeek());
@@ -227,6 +229,7 @@ public class SchFragment extends BaseFragment {
             }
         }
 
+        //暂时整理数组为5 * 5
         for (int i = 0; i < 5; i++) {
             for (int j = cells.get(i).size(); j > 5; j--) {
                 cells.get(i).remove(j - 1);
