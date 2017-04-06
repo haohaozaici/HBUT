@@ -4,6 +4,7 @@ import com.example.hao.hbut.model.bean.LogInfo;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -48,6 +49,16 @@ public interface HbutApi {
     String Jsoup_Host = "http://run.hbut.edu.cn/StuGrade/Index/";
     @GET("?")
     Observable<ResponseBody> getHtml();
+
+    // 图书馆
+    String verifyUrl = "http://202.114.181.3:8080/reader/captcha.php";
+    String Cookie_Host = "http://202.114.181.3:8080/reader/redr_verify.php";
+
+    @GET("?")
+    Observable<ResponseBody> getCode();
+
+    @GET("?")
+    Observable<Response> getCookie();
 
 
 }
