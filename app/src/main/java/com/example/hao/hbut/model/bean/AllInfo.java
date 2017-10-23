@@ -3,7 +3,9 @@ package com.example.hao.hbut.model.bean;
 import android.content.Context;
 
 import com.example.hao.hbut.Main.Sch.Cell;
+import com.example.hao.hbut.Main.me.LibInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +18,7 @@ public class AllInfo {
     public Schedule Schedule;
     public Setting Setting;
     public List<List<Cell>> cells;
+    public LibInfo mLibInfo;
 
     public Grade getGrade() {
         return Grade;
@@ -47,5 +50,13 @@ public class AllInfo {
 
     public void setCells(List<List<Cell>> cells) {
         this.cells = cells;
+    }
+
+    public LibInfo getLibInfo() {
+        return mLibInfo;
+    }
+
+    public void setLibInfo(LibInfo libInfo) {
+        mLibInfo = libInfo;
     }
 }

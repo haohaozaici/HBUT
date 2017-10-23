@@ -50,55 +50,51 @@ public class Network {
 
         switch (instance) {
             case HbutApi.Account_HOST:
+                setting.setAccount(Setting.CLASS_PLATFORM);
                 retrofit = new Retrofit.Builder()
                         .client(okHttpClient_received)
                         .baseUrl(HbutApi.Account_HOST)
                         .addConverterFactory(gsonConverterFactory)
                         .addCallAdapterFactory(rxjavaCallAdapterFactory)
                         .build();
-                sHbutApi = retrofit.create(HbutApi.class);
-
-                return sHbutApi;
+                break;
             case HbutApi.StuGrade_HOST:
+                setting.setAccount(Setting.CLASS_PLATFORM);
                 retrofit = new Retrofit.Builder()
                         .client(okHttpClient_add)
                         .baseUrl(HbutApi.StuGrade_HOST)
 //                    .addConverterFactory(gsonConverterFactory)
                         .addCallAdapterFactory(rxjavaCallAdapterFactory)
                         .build();
-                sHbutApi = retrofit.create(HbutApi.class);
-
-                return sHbutApi;
+                break;
             case HbutApi.Schedule_Host:
+                setting.setAccount(Setting.CLASS_PLATFORM);
                 retrofit = new Retrofit.Builder()
                         .client(okHttpClient_add)
                         .baseUrl(HbutApi.Schedule_Host)
                         .addCallAdapterFactory(rxjavaCallAdapterFactory)
                         .build();
-                sHbutApi = retrofit.create(HbutApi.class);
-
-                return sHbutApi;
-            case HbutApi.StuAllGrade_HOST:
+                break;
+            case HbutApi.LIB_RECEIVED_COOKIE:
+                setting.setAccount(Setting.LIB);
                 retrofit = new Retrofit.Builder()
-                        .client(okHttpClient_add)
-                        .baseUrl(HbutApi.StuAllGrade_HOST)
+                        .client(okHttpClient_received)
+                        .baseUrl(HbutApi.LibHost)
                         .addCallAdapterFactory(rxjavaCallAdapterFactory)
                         .build();
-                sHbutApi = retrofit.create(HbutApi.class);
-
-                return sHbutApi;
-            case HbutApi.Jsoup_Host:
+                break;
+            case HbutApi.LIB_ADD_COOKIE:
+                setting.setAccount(Setting.LIB);
                 retrofit = new Retrofit.Builder()
                         .client(okHttpClient_add)
-                        .baseUrl(HbutApi.Jsoup_Host)
+                        .baseUrl(HbutApi.LibHost)
                         .addCallAdapterFactory(rxjavaCallAdapterFactory)
                         .build();
-                sHbutApi = retrofit.create(HbutApi.class);
-
-                return sHbutApi;
+                break;
             default:
-                return null;
+                break;
         }
+        return retrofit.create(HbutApi.class);
     }
 
     public class ReceivedCookiesInterceptor implements Interceptor {
@@ -112,11 +108,16 @@ public class Network {
                     cookies.add(header);
                 }
 
-                setting.setLogin(true);
-
+                int cutString = 0;
+                if (setting.getAccount().equals(Setting.CLASS_PLATFORM)) {
+                    cutString = 16;
+                    setting.setLogin(true);
+                } else if (setting.getAccount().equals(Setting.LIB)) {
+                    cutString = 8;
+                }
                 ArrayList<String> cookiesArray = new ArrayList<>();
                 for (String cookie : cookies) {
-                    cookie = cookie.substring(0, cookie.length() - 16);
+                    cookie = cookie.substring(0, cookie.length() - cutString);
                     cookiesArray.add(cookie);
                 }
                 int position = cookiesArray.size();
@@ -126,7 +127,12 @@ public class Network {
                     cookie2 += cookie;
                 }
 
-                setting.setCookies(cookie2);
+                if (setting.getAccount().equals(Setting.CLASS_PLATFORM)) {
+                    setting.setCookies(cookie2);
+                } else if (setting.getAccount().equals(Setting.LIB)) {
+                    setting.setLibCookie(cookie2);
+                }
+
 
 //                Log.e("login name + cookies", Setting.getUserName() + cookie2);
             }
@@ -141,7 +147,11 @@ public class Network {
             Request.Builder builder = chain.request().newBuilder();
 
 //            Log.e("get information name", Setting.getUserName());
-            builder.addHeader("Cookie", setting.getCookies());
+            if (setting.getAccount().equals(Setting.CLASS_PLATFORM)) {
+                builder.addHeader("Cookie", setting.getCookies());
+            } else if (setting.getAccount().equals(Setting.LIB)) {
+                builder.addHeader("Cookie", setting.getLibCookie());
+            }
 //            builder.addHeader("Cookie", "");
 //            Log.e("OkHttp", "Adding Header: " + Setting.getCookies());
 

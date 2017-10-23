@@ -101,13 +101,6 @@ public class GradeFragment extends BaseFragment {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-//                String s2 = responseBody.string();
-//
-//                Document document = Jsoup.parse(s2);
-//                Element content = document.getElementById("mainContent");
-//                Elements elements = content.getElementsByClass("table-list");
-//                String text = elements.text();
-//                String text2 = elements.get(0).attr("th");
 
                             String s = responseBody.string();
                             s = s.replaceAll("\\\\", "");

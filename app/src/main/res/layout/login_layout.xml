@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <ImageView
         android:layout_width="385dp"
         android:layout_height="96dp"
-        android:src="@drawable/logon_bac" />
+        android:src="@drawable/logon_bac"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="18dp"
-                android:src="@drawable/smile" />
+                android:src="@drawable/smile"/>
 
             <EditText
                 android:id="@+id/name_number"
@@ -38,7 +38,7 @@
                 android:background="@null"
                 android:hint="学号"
                 android:inputType="textVisiblePassword"
-                android:textCursorDrawable="@null" />
+                android:textCursorDrawable="@null"/>
 
 
         </LinearLayout>
@@ -49,7 +49,7 @@
             android:layout_height="1.5dp"
             android:layout_below="@+id/name"
             android:layout_marginTop="10dp"
-            android:background="@color/grey_logon" />
+            android:background="@color/grey_logon"/>
 
     </RelativeLayout>
 
@@ -72,7 +72,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="18dp"
-                android:src="@drawable/password" />
+                android:src="@drawable/password"/>
 
             <EditText
                 android:id="@+id/password_number"
@@ -81,8 +81,8 @@
                 android:background="@null"
                 android:hint="密码"
                 android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:textCursorDrawable="@null" />
+                android:inputType="textVisiblePassword"
+                android:textCursorDrawable="@null"/>
 
 
         </LinearLayout>
@@ -93,7 +93,60 @@
             android:layout_height="1.5dp"
             android:layout_below="@+id/password"
             android:layout_marginTop="10dp"
-            android:background="@color/grey_logon" />
+            android:background="@color/grey_logon"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/captcha_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:id="@+id/captcha"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/img_3"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/captcha"/>
+
+            <EditText
+                android:id="@+id/captcha_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="验证码"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:textCursorDrawable="@null"/>
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="150dp"
+            android:layout_height="1.5dp"
+            android:layout_below="@+id/captcha"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey_logon"/>
+
+        <ImageView
+            android:id="@+id/captcha_img"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginStart="20dp"
+            android:layout_toRightOf="@id/captcha"
+            />
 
     </RelativeLayout>
 

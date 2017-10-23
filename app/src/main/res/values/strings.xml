@@ -10,6 +10,11 @@
 
     <string name="cookie_unable">点击过快或cookie失效,请重新刷新或登录</string>
 
+    <!--Lib -->
+    <string name="captcha_error">验证码获取异常，请点击验证码刷新</string>
+    <string name="lib_verify_success">绑定成功</string>
+    <string name="lib_error">未知异常,请重新尝试</string>
+
     <!--about me-->
     <string name="category_about">关于</string>
     <string name="version">ver 1.0</string>

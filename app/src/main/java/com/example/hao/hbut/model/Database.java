@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.hao.hbut.Main.Sch.Cell;
+import com.example.hao.hbut.Main.me.LibInfo;
 import com.example.hao.hbut.base.BaseActivity;
 import com.example.hao.hbut.model.bean.AllInfo;
 import com.example.hao.hbut.model.bean.Grade;
@@ -12,6 +13,7 @@ import com.example.hao.hbut.model.bean.Schedule;
 import com.example.hao.hbut.model.bean.Setting;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +50,10 @@ public enum Database {
         return mAllInfo.getCells();
     }
 
+    public ArrayList<String> getLibInfo() {
+        return mAllInfo.getLibInfo().getInfoList();
+    }
+
     public void saveCells(List<List<Cell>> cells) {
         mAllInfo.setCells(cells);
     }
@@ -62,6 +68,10 @@ public enum Database {
 
     public void saveSetting(Setting setting) {
         mAllInfo.setSetting(setting);
+    }
+
+    public void saveLibInfo(LibInfo libInfo) {
+        mAllInfo.setLibInfo(libInfo);
     }
 
     public void loadAllData(Context context) {
@@ -97,6 +107,7 @@ public enum Database {
         mAllInfo.setSetting(null);
         mAllInfo.setGrade(null);
         mAllInfo.setSchedule(null);
+        mAllInfo.setLibInfo(null);
         saveAllData(activity);
     }
 

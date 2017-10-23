@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import android.view.View;
 
 import com.example.hao.hbut.Main.Grade.GradeFragment;
 import com.example.hao.hbut.Main.Sch.SchFragment;
+import com.example.hao.hbut.Main.me.MeFragment;
 import com.example.hao.hbut.R;
 import com.example.hao.hbut.base.BaseActivity;
 
@@ -37,6 +39,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_main_layout);
+
+        if (setting.isFirstRun()) {
+            setting.setFirstRun(false);
+        }
 
         MainActivityPermissionsDispatcher.needPhoneStateWithCheck(this);
 
@@ -100,24 +106,27 @@ public class MainActivity extends BaseActivity {
 
     @NeedsPermission({Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void needPhoneState() {
-
+        new AlertDialog.Builder(this)
+                .setMessage("已获取所有权限")
+                .setPositiveButton("OK", null)
+                .show();
     }
 
     //请求权限前提示消息
     @OnShowRationale({Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void showRationaleForCamera(final PermissionRequest request) {
         new AlertDialog.Builder(this)
-                .setMessage("我们申请手机权限仅用来统计用户，请允许哟...")
-                .setPositiveButton("允许", new DialogInterface.OnClickListener() {
+                .setMessage("我们申请手机和储存权限仅用来统计用户和保存数据，绝对不会收集个人信息，请允许哟...")
+                .setPositiveButton("没问题", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(DialogInterface dialog, int which) {
                         request.proceed();
                     }
                 })
-                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+                .setNegativeButton("还是可以吧", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        request.cancel();
+                    public void onClick(DialogInterface dialog, int which) {
+                        request.proceed();
                     }
                 })
                 .show();
@@ -133,5 +142,10 @@ public class MainActivity extends BaseActivity {
                         MainActivityPermissionsDispatcher.needPhoneStateWithCheck(MainActivity.this);
                     }
                 }).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
