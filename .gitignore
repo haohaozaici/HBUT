@@ -41,8 +41,9 @@ captures/
 .DS_Store
 /build
 /captures
+.idea/
 
 # Keystore files
 *.jks
-.idea/workspace.xml
-.idea/vcs.xml
+
+gradle.properties
