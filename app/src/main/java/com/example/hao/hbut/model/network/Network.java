@@ -33,7 +33,7 @@ public class Network {
 
     private Retrofit retrofit;
 
-    private Retrofit getRetrofit(boolean addCookies, boolean receivedCookies) {
+    private Retrofit getRetrofit() {
         if (retrofit == null) {
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder()
@@ -46,8 +46,7 @@ public class Network {
                 builder.addNetworkInterceptor(interceptor);
             }
 
-            HbutInterceptor hbutInterceptor = new HbutInterceptor(addCookies, receivedCookies);
-            builder.addInterceptor(hbutInterceptor);
+            builder.addInterceptor(new HbutInterceptor());
 
             retrofit = new Retrofit.Builder()
                     .client(builder.build())
@@ -60,30 +59,8 @@ public class Network {
         return retrofit;
     }
 
-
-//    public class AddCookiesInterceptor implements Interceptor {
-//
-//        @Override
-//        public okhttp3.Response intercept(Chain chain) throws IOException {
-//            Request.Builder builder = chain.request().newBuilder();
-//
-////            Log.e("get information name", Setting.getUserName());
-//            if (setting.getAccount().equals(Setting.CLASS_PLATFORM)) {
-//                builder.addHeader("Cookie", setting.getCookies());
-//            } else if (setting.getAccount().equals(Setting.LIB)) {
-//                builder.addHeader("Cookie", setting.getLibCookie());
-//            }
-////            builder.addHeader("Cookie", "");
-////            Log.e("OkHttp", "Adding Header: " + Setting.getCookies());
-//
-//            // This is done so I know which headers are being added;
-//            // this interceptor is used after the normal logging of OkHttp
-//            return chain.proceed(builder.build());
-//        }
-//    }
-
-    public HbutApi getHbutService(boolean addCookies, boolean receivedCookies) {
-        return getRetrofit(addCookies, receivedCookies).create(HbutApi.class);
+    public HbutApi getHbutService() {
+        return getRetrofit().create(HbutApi.class);
     }
 
 }

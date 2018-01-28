@@ -5,7 +5,9 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.example.hao.hbut.feature.login.bean.LoginRes;
+import com.example.hao.hbut.model.sp.HbutSP;
 
 /**
  * Created by haoyuan on 2018/1/20.
@@ -28,9 +30,11 @@ public class LoginViewModel extends ViewModel {
             assert res != null;
             switch (res.getStatus()) {
                 case 0:
+                    SPUtils.getInstance(HbutSP.TAG).put(HbutSP.LOGIN, true);
                     mLoginLiveData.setValue(res);
                     break;
                 case 1:
+                    SPUtils.getInstance(HbutSP.TAG).put(HbutSP.LOGIN, false);
                     mThrowableLiveData.setValue(res.getThrowable());
                     break;
                 default:

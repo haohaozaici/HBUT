@@ -2,6 +2,7 @@ package com.example.hao.hbut.feature.login;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.example.hao.hbut.R;
+import com.example.hao.hbut.View.util.SoftKeyInputHidWidget;
+import com.example.hao.hbut.View.widget.dialog.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +30,7 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
 
+    @BindView(R.id.login_layout) RelativeLayout mRootLayout;
     @BindView(R.id.login_account_img) ImageView mAccountImg;
     @BindView(R.id.login_account_value) EditText mAccountEditText;
     @BindView(R.id.login_account_line) View mAccountLine;
@@ -36,22 +41,30 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.login_button) Button mLoginButton;
 
+    private LoadingDialog dialog;
+
     private String mAccountString;
     private String mPasswordString;
 
     private LoginViewModel mModel;
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, LoginActivity.class);
+//        starter.putExtra();
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
         ButterKnife.bind(this);
-
         initView();
 
         mModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
         mModel.getLoginLiveData().observe(this, loginRes -> {
+            dialog.dismiss();
             if (loginRes != null) {
                 Snackbar.make(mLoginButton, loginRes.getMessage(), Snackbar.LENGTH_SHORT).show();
                 mLoginButton.postDelayed(() -> {
@@ -62,6 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mModel.getThrowableLiveData().observe(this, throwable -> {
+            dialog.dismiss();
+            mLoginButton.setClickable(true);
             if (throwable != null) {
                 throwable.printStackTrace();
                 Snackbar.make(mLoginButton, throwable.getMessage(), Snackbar.LENGTH_SHORT).show();
@@ -72,9 +87,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
-        mAccountEditText.requestFocus();
-
+        dialog = new LoadingDialog(this);
+   
         mAccountEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -127,10 +141,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mLoginButton.setOnClickListener(v -> login());
+        mLoginButton.setOnClickListener(v -> {
+
+            v.setClickable(false);
+            login();
+        });
+        //handle login button cover
+        SoftKeyInputHidWidget.addLayoutListener(mRootLayout, mLoginButton);
+
     }
 
     private void login() {
+        dialog.show();
+
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(mLoginButton.getWindowToken(), 0);

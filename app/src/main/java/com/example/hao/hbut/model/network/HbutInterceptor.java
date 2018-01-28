@@ -1,9 +1,19 @@
 package com.example.hao.hbut.model.network;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.elvishew.xlog.XLog;
+import com.example.hao.hbut.model.sp.HbutSP;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.Headers;
 import okhttp3.Interceptor;
+import okhttp3.Request;
 import okhttp3.Response;
 
 /**
@@ -12,30 +22,38 @@ import okhttp3.Response;
 
 public class HbutInterceptor implements Interceptor {
 
-    private boolean mAddCookies = false;
-    private boolean mReceivedCookies = false;
+    private static final String TAG = "HbutInterceptor";
 
-    public HbutInterceptor() {
-    }
-
-    public HbutInterceptor(boolean add_cookies, boolean received_cookies) {
-        this.mAddCookies = add_cookies;
-        this.mReceivedCookies = received_cookies;
-    }
 
     @Override
-    public Response intercept(Chain chain) throws IOException {
-        if (mAddCookies) {
+    public Response intercept(@NonNull Chain chain) throws IOException {
 
+        //add cookies
+        Request.Builder builder = chain.request().newBuilder();
 
+        String cookies = SPUtils.getInstance(HbutSP.TAG).getString(HbutSP.COOKIES);
+        if (!StringUtils.isEmpty(cookies)) {
+            builder.addHeader("Cookie", cookies);
         }
 
 
-        if (mReceivedCookies) {
+        //received cookies
+        Response originalResponse = chain.proceed(chain.request());
 
-
+        StringBuilder newCookies = new StringBuilder();
+        for (String cookie : originalResponse.headers("Set-Cookie")) {
+            XLog.tag(TAG).d("intercept: cookie:  " + cookie);
+            if (!StringUtils.isEmpty(cookie)) {
+                newCookies.append(cookie.replace("path=/; HttpOnly", ""));
+            }
         }
 
-        return null;
+        if (!StringUtils.isTrimEmpty(newCookies.toString())) {
+            SPUtils.getInstance(HbutSP.TAG).put(HbutSP.COOKIES, newCookies.toString());
+        }
+
+        return chain.proceed(builder.build());
+
     }
+
 }

@@ -20,7 +20,7 @@ public class LoginRepo {
 
     public static LiveData<LoginRes> login(String account, String password) {
 
-        Flowable<LoginRes> flowable = Network.getInstance().getHbutService(false, true)
+        Flowable<LoginRes> flowable = Network.getInstance().getHbutService()
                 .logOn(account, password, "Student")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

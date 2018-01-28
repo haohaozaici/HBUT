@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/login_background"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginBottom="40dp"
         android:src="@drawable/logon_bac" />
 
+
     <RelativeLayout
+        android:id="@+id/login_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/login_background"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp">
 
         <LinearLayout
-            android:id="@+id/login_account"
+            android:id="@+id/login_account_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -49,21 +53,23 @@
             android:id="@+id/login_account_line"
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
-            android:layout_below="@+id/login_account"
+            android:layout_below="@+id/login_account_input"
             android:layout_marginTop="10dp"
             android:background="@color/grey_logon" />
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/login_account"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp">
 
         <LinearLayout
-            android:id="@+id/login_password"
+            android:id="@+id/login_password_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -94,16 +100,17 @@
             android:id="@+id/login_password_line"
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
-            android:layout_below="@+id/login_password"
+            android:layout_below="@+id/login_password_input"
             android:layout_marginTop="10dp"
             android:background="@color/grey_logon" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/login_captcha_layout"
+        android:id="@+id/login_captcha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/login_password"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="10dp"
@@ -111,7 +118,7 @@
         tools:visibility="visible">
 
         <LinearLayout
-            android:id="@+id/login_captcha_input_layout"
+            android:id="@+id/login_captcha_input"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -141,7 +148,7 @@
             android:id="@+id/login_captcha_line"
             android:layout_width="150dp"
             android:layout_height="1.5dp"
-            android:layout_below="@+id/login_captcha_input_layout"
+            android:layout_below="@+id/login_captcha_input"
             android:layout_marginTop="10dp"
             android:background="@color/grey_logon" />
 
@@ -150,7 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/login_captcha_input_layout" />
+            android:layout_toEndOf="@id/login_captcha_input" />
 
     </RelativeLayout>
 
@@ -159,10 +166,11 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_below="@id/login_captcha"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="登录"
         android:visibility="visible" />
 
 
-</LinearLayout>
+</RelativeLayout>

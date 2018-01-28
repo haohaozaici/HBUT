@@ -8,5 +8,7 @@ public class HbutSP extends BaseSP {
 
     public static final String TAG = "HBUT";
 
+    public static final String LOGIN = "login";
     public static final String COOKIES = "cookies";
+
 }
